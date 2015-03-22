@@ -1,0 +1,466 @@
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:background="#0099cc"
+        tools:context="shan_shine.informus.MainActivity2">
+        >
+
+        <!-- The primary full-screen view. This can be replaced with whatever view
+             is needed to present your content, e.g. VideoView, SurfaceView,
+             TextureView, etc. -->
+
+        <!-- This FrameLayout insets its children based on system windows using
+             android:fitsSystemWindows. -->
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ffffffff"
+            android:weightSum="1"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffffff"
+                android:layout_gravity="center"
+                android:weightSum="1"
+                android:id="@+id/bg">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:id="@+id/imgvwLogo"
+                    android:src="@drawable/inflogo3"
+                    android:focusableInTouchMode="false"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="bottom" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Sign up for InformUs"
+                    android:id="@+id/lblSignUp"
+                    android:layout_marginLeft="5dp"
+                    style="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:background="@drawable/top2"
+                    android:layout_weight="0.90" />
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    style="@style/Base.TextAppearance.AppCompat.Title"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:clickable="false"
+                    android:layout_marginBottom="5dp"
+                    android:weightSum="1" >
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:text="First Name"
+                        android:id="@+id/lblFirstName"
+                        android:layout_marginTop="15dp"
+                        android:textColor="#ff000000"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp" />
+
+                    <EditText
+                        android:layout_width="259dp"
+                        android:layout_height="34dp"
+                        android:id="@+id/txtLogin"
+                        android:clickable="true"
+                        android:editable="true"
+                        android:elegantTextHeight="false"
+                        android:enabled="true"
+                        android:focusable="true"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:autoText="true"
+                        android:background="#ffe6e6e6"
+                        android:textColorHint="#ff696969"
+                        android:layout_weight="0.46" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:text="Last Name"
+                        android:id="@+id/lblLastName"
+                        android:layout_gravity="center"
+                        android:textColor="#ff000000"
+                        android:layout_marginLeft="5dp"
+                        android:focusableInTouchMode="true" />
+
+                    <EditText
+                        android:layout_width="260dp"
+                        android:layout_height="34dp"
+                        android:inputType="text"
+                        android:ems="10"
+                        android:id="@+id/txtPassword"
+                        android:editable="true"
+                        android:enabled="true"
+                        android:focusable="true"
+                        android:layout_marginLeft="5dp"
+                        android:background="#ffe6e6e6"
+                        android:autoText="true"
+                        android:layout_weight="0.36" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:text="Gender"
+                        android:id="@+id/lblGender"
+                        android:layout_gravity="center"
+                        android:textColor="#ff000000"
+                        android:layout_marginLeft="5dp"
+                        android:focusableInTouchMode="true" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:id="@+id/cbMale"
+                        android:checked="false"
+                        android:layout_marginRight="15dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:id="@+id/cbFemale"
+                        android:checked="false" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:weightSum="1" >
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:text="Email"
+                        android:id="@+id/lblEmail"
+                        android:layout_gravity="center"
+                        android:textColor="#ff000000"
+                        android:layout_marginLeft="5dp"
+                        android:focusableInTouchMode="true" />
+
+                    <EditText
+                        android:layout_width="260dp"
+                        android:layout_height="34dp"
+                        android:ems="10"
+                        android:id="@+id/lblqEmail"
+                        android:editable="true"
+                        android:enabled="true"
+                        android:focusable="true"
+                        android:layout_marginLeft="5dp"
+                        android:background="#ffe6e6e6"
+                        android:autoText="true"
+                        android:layout_weight="0.36"
+                        android:hint="e.g example@abc.com"
+                        android:inputType="textEmailAddress" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:weightSum="1" >
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:text="Confirm email"
+                        android:id="@+id/lblEmailConf"
+                        android:layout_gravity="center"
+                        android:textColor="#ff000000"
+                        android:layout_marginLeft="5dp"
+                        android:focusableInTouchMode="true" />
+
+                    <EditText
+                        android:layout_width="260dp"
+                        android:layout_height="34dp"
+                        android:inputType="textEmailAddress|text"
+                        android:ems="10"
+                        android:id="@+id/tbConfirmEmail"
+                        android:editable="true"
+                        android:enabled="true"
+                        android:focusable="true"
+                        android:layout_marginLeft="5dp"
+                        android:background="#ffe6e6e6"
+                        android:autoText="true"
+                        android:layout_weight="0.36" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:weightSum="1" >
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:text="Password"
+                        android:id="@+id/textView"
+                        android:layout_gravity="center"
+                        android:textColor="#ff000000"
+                        android:layout_marginLeft="5dp"
+                        android:focusableInTouchMode="true" />
+
+                    <EditText
+                        android:layout_width="260dp"
+                        android:layout_height="34dp"
+                        android:inputType="textPassword"
+                        android:ems="10"
+                        android:id="@+id/tbpassword"
+                        android:editable="true"
+                        android:enabled="true"
+                        android:focusable="true"
+                        android:layout_marginLeft="5dp"
+                        android:background="#ffe6e6e6"
+                        android:autoText="true"
+                        android:layout_weight="0.36" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:weightSum="1" >
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="Confirm Password"
+                        android:id="@+id/lblConfPassword"
+                        android:layout_gravity="center"
+                        android:textColor="#ff000000"
+                        android:layout_marginLeft="5dp"
+                        android:focusableInTouchMode="true" />
+
+                    <EditText
+                        android:layout_width="260dp"
+                        android:layout_height="34dp"
+                        android:inputType="textPassword"
+                        android:ems="10"
+                        android:id="@+id/editText2"
+                        android:editable="true"
+                        android:enabled="true"
+                        android:focusable="true"
+                        android:layout_marginLeft="5dp"
+                        android:background="#ffe6e6e6"
+                        android:autoText="true"
+                        android:layout_weight="0.36" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:weightSum="1" >
+
+                    <TextView
+                        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile Number"
+                        android:id="@+id/lblMobileNo"
+                        android:layout_gravity="center"
+                        android:textColor="#ff000000"
+                        android:layout_marginLeft="5dp"
+                        android:focusableInTouchMode="true" />
+
+                    <EditText
+                        android:layout_width="260dp"
+                        android:layout_height="34dp"
+                        android:ems="10"
+                        android:id="@+id/tbPhoneNo"
+                        android:editable="true"
+                        android:enabled="true"
+                        android:focusable="true"
+                        android:layout_marginLeft="5dp"
+                        android:background="#ffe6e6e6"
+                        android:autoText="true"
+                        android:layout_weight="0.36"
+                        android:inputType="phone"
+                        android:hint="+(1876)" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="79dp" >
+
+                    <CheckBox
+                        style="@style/Base.TextAppearance.AppCompat.Caption"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="I agree to the terms and conditions"
+                        android:id="@+id/cbTerms"
+                        android:enabled="true"
+                        android:ellipsize="none"
+                        android:checked="true"
+                        android:textColor="#ff787878"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                    <Button
+                        style="@style/RtlOverlay.Widget.AppCompat.SearchView.MagIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Continue"
+                        android:id="@+id/btnSignUp"
+                        android:onClick="onClickButton"
+                        android:layout_marginRight="38dp"
+                        android:layout_marginEnd="38dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Forgot Password?"
+                        android:id="@+id/lblForgotpassword"
+                        android:textColor="#ff787878"
+                        android:onClick="forgotPasswordHandler"
+                        android:clickable="true"
+                        android:textStyle="bold|italic"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="20dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/Relative" >
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true">
+
+                        <TextView
+                            style="@style/Base.Theme.AppCompat.Dialog"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New to Informus?"
+                            android:id="@+id/lblCreateAccount"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="5dp"
+                            android:capitalize="none"
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:singleLine="true"
+                            android:enabled="true"
+                            android:linksClickable="true"
+                            android:textColor="#ff142144"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="190dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sign Up"
+                            android:id="@+id/lblsignup"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:background="#ffffffff"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginTop="5dp"
+                            android:textIsSelectable="true"
+                            android:textColor="#ff0009ff"
+                            android:textStyle="normal|bold|italic"
+                            style="@style/Base.Widget.AppCompat.Toolbar"
+                            android:autoText="false"
+                            android:autoLink="none"
+                            android:clickable="true"
+                            android:textColorLink="#ff3963ff"
+                            android:typeface="serif"
+                            android:translationZ="@dimen/abc_text_size_display_3_material"
+                            android:theme="@style/AppTheme"
+                            android:linksClickable="true"
+                            android:longClickable="false"
+                            android:layout_marginRight="20dp" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+            </TableLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_weight="0.68" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"
+            android:background="@drawable/bottom2"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </FrameLayout>
