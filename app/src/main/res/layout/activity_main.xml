@@ -18,7 +18,8 @@ android:layout_height="match_parent" android:background="#0099cc"
     android:weightSum="1"
     android:layout_alignParentEnd="false"
     android:layout_alignParentLeft="false"
-    android:layout_centerInParent="true" >
+    android:layout_centerInParent="true"
+    android:clickable="true">
 
     <LinearLayout
         android:orientation="vertical"
@@ -59,7 +60,8 @@ android:layout_height="match_parent" android:background="#0099cc"
             android:baselineAligned="false"
             android:clickable="false"
             android:layout_marginBottom="5dp"
-            android:weightSum="1" >
+            android:weightSum="1"
+            android:layout_marginTop="5dp">
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
@@ -87,7 +89,8 @@ android:layout_height="match_parent" android:background="#0099cc"
                 android:autoText="true"
                 android:background="#ffe6e6e6"
                 android:textColorHint="#ff696969"
-                android:layout_weight="0.46" />
+                android:layout_weight="0.46"
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
@@ -147,88 +150,13 @@ android:layout_height="match_parent" android:background="#0099cc"
                 android:id="@+id/btnLogIn"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:onClick="onClickButton" />
+                android:nestedScrollingEnabled="false" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Forgot Password?"
-                android:id="@+id/lblForgotpassword"
-                android:textColor="#ff787878"
-                android:onClick="forgotPasswordHandler"
-                android:clickable="true"
-                android:textStyle="bold|italic"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="20dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/Relative" >
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
-
-                <TextView
-                    style="@style/Base.Theme.AppCompat.Dialog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="New to Informus?"
-                    android:id="@+id/lblCreateAccount"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="5dp"
-                    android:capitalize="none"
-                    android:focusable="true"
-                    android:clickable="true"
-                    android:singleLine="true"
-                    android:enabled="true"
-                    android:linksClickable="true"
-                    android:textColor="#ff142144"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="190dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sign Up"
-                    android:id="@+id/lblsignup"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:background="#ffffffff"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="5dp"
-                    android:textIsSelectable="true"
-                    android:textColor="#ff0009ff"
-                    android:textStyle="normal|bold|italic"
-                    style="@style/Base.Widget.AppCompat.Toolbar"
-                    android:autoText="false"
-                    android:autoLink="none"
-                    android:clickable="true"
-                    android:textColorLink="#ff3963ff"
-                    android:typeface="serif"
-                    android:translationZ="@dimen/abc_text_size_display_3_material"
-                    android:theme="@style/AppTheme"
-                    android:linksClickable="true"
-                    android:longClickable="false"
-                    android:layout_marginRight="20dp" />
-            </LinearLayout>
 
         </RelativeLayout>
 
@@ -237,10 +165,74 @@ android:layout_height="match_parent" android:background="#0099cc"
             android:layout_height="fill_parent" />
     </TableLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:id="@+id/lblForgotpassword"
+        android:textColor="#ff787878"
+        android:onClick="forgotPasswordHandler"
+        android:clickable="true"
+        android:textStyle="bold|italic"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+        android:textSize="20dp"
+        android:layout_gravity="right" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="28dp"
-        android:layout_weight="0.68" />
+        android:layout_weight="0.36">
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New to Informus?"
+            android:id="@+id/lblCreateAccount"
+            android:capitalize="none"
+            android:focusable="true"
+            android:clickable="true"
+            android:singleLine="true"
+            android:enabled="true"
+            android:linksClickable="true"
+            android:textColor="#ff142144"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:id="@+id/lblsignup"
+            android:background="#ffffffff"
+            android:textIsSelectable="true"
+            android:textColor="#ff0009ff"
+            android:textStyle="normal|bold|italic"
+            style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+            android:autoText="false"
+            android:autoLink="none"
+            android:clickable="true"
+            android:textColorLink="#ff3963ff"
+            android:typeface="serif"
+            android:translationZ="@dimen/abc_text_size_display_3_material"
+            android:theme="@style/AppTheme"
+            android:linksClickable="true"
+            android:longClickable="false"
+            android:textSize="25dp"
+            android:textColorHighlight="#ff27ff00"
+            android:onClick="signupClick"
+            android:maxHeight="60dp"
+            android:maxLines="2"
+            android:focusable="false"
+            android:layout_alignBottom="@+id/lblCreateAccount"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="5dp" />
+    </RelativeLayout>
 </LinearLayout>
 
 <RelativeLayout

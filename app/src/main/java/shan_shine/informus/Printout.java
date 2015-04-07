@@ -18,4 +18,5 @@ public class Printout
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 
     }
+
 }
