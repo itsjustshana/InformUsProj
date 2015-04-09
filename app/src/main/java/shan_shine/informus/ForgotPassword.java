@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class ForgotPassword extends ActionBarActivity {
@@ -36,4 +37,10 @@ public class ForgotPassword extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void sendClicked(View v)
+    {
+        Printout.message(this, "Send password button Clicked");
+    }
+
 }

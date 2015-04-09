@@ -141,7 +141,7 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="36dp">
 
                 <TextView
                     style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
@@ -167,14 +167,18 @@
                         android:text="Male"
                         android:id="@+id/cbMale"
                         android:checked="true"
-                        android:layout_marginRight="15dp" />
+                        android:layout_marginRight="15dp"
+                        android:textColor="#ff000000"
+                        android:textSize="13dp" />
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Female"
                         android:id="@+id/cbFemale"
-                        android:checked="false" />
+                        android:checked="false"
+                        android:textColor="#ff000000"
+                        android:textSize="13dp" />
                 </RadioGroup>
 
             </LinearLayout>
@@ -350,7 +354,7 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="27dp" >
+                android:layout_height="36dp" >
 
                 <CheckBox
                     style="@style/Base.TextAppearance.AppCompat.Caption"

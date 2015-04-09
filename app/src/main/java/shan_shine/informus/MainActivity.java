@@ -27,12 +27,16 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
     Button login;
    EditText password;
     EditText username;
+
+    String name;
+    String pass;
 
     Context context = this;
 
@@ -115,17 +119,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     JSONObject Jasonobject = null;
                     Jasonobject = Jarray.getJSONObject(i);
 
-                    String name = Jasonobject.getString("username");
+                    name = Jasonobject.getString("username");
                     String db_detail="";
 
                     if(username.getText().toString().equalsIgnoreCase(name))
 
                     {
-                           String pass = Jasonobject.getString("password");
+                           pass = Jasonobject.getString("password");
 
                         if (password.getText().toString().equals(pass))
                         {
                             Printout.message(context, "Progress");
+
+
+                            //////// Insert internal databse code here
+                            localDatabase();
                         }
                         else
                         {
@@ -164,8 +172,46 @@ public class MainActivity extends Activity implements View.OnClickListener {
         startActivity(nextScreen);
 
     }
+
+    public void forgetPasswordClick(View v)
+    {
+        Printout.message(this, "Forget Password Clicked");
+
+        Intent nextScreen = new Intent(getApplicationContext(), ForgotPassword.class);
+        startActivity(nextScreen);
+
+    }
+
+
      public void elseClick(View v)
      {
          Printout.message(this, "else");
      }
+
+    public void localDatabase()
+    {
+        try {
+            LoginDatabase db = new LoginDatabase(this);
+
+            Printout.message(this, "Local DB Created");
+
+            db.addLoginItem(new LoginItem(name,pass));
+
+            List<LoginItem> itemsLogin = db.getAllLoginItems();
+
+            for (LoginItem ti : itemsLogin) {
+                String log = "Id: " + ti.getUsername() + " , Body: " + ti.getPassword();
+
+                Printout.message(context, log);
+                // Writing Todo Items to log
+                Log.d("Name: ", log);
+            }
+
+
+        }
+        catch(Exception e)
+        {
+            Printout.message(this, "crashed");
+        }
+    }
 }
