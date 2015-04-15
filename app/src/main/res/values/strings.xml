@@ -8,5 +8,27 @@
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_forgot_password">ForgotPassword</string>
     <string name="title_activity_homepage">homepageActivity</string>
+    <string name="title_activity_homepage_main">homepageMainActivity</string>
+
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_my_groups">myGroupsActivity</string>
+    <string name="title_activity_following_groups">FollowingGroupsActivity</string>
+    <string name="title_activity_main_tab">MainTab</string>
+    <string name="title_activity_groups_followed">GroupsFollowed</string>
+    <string name="title_activity_tryy">tryy</string>
+    <string name="title_activity_tryal">tryal</string>
+    <string name="title_activity_work_please">WorkPlease</string>
+    <string name="title_activity_fragment_tab">FragmentTab</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_homee">Homee</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_group_create">GroupCreate</string>
+    <string name="title_activity_fragment">FragmentAct</string>
+    <string name="title_activity_yyyyyyyyyyyyy">yyyyyyyyyyyyy</string>
 
 </resources>

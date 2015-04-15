@@ -83,17 +83,22 @@ import java.util.List;
     public LoginItem getLoginItem(String username)
     {
         SQLiteDatabase db = this.getReadableDatabase();
+        LoginItem login = null;
 
         Cursor cursor = db.query(Table_Login, new String[]{USERNAME,PASSWORD},USERNAME+ "= ?",new String[]{String.valueOf(username)},null,null, "username ASC", "100");
 
         if (cursor != null)
             cursor.moveToFirst();
 
-        LoginItem login = new LoginItem(cursor.getString(0), cursor.getString(1));
+        login = new LoginItem(cursor.getString(0), cursor.getString(1));
 
         return login;
 
     }
+
+
+
+
 
 
     public List<LoginItem> getAllLoginItems()

@@ -39,12 +39,6 @@ android:layout_height="match_parent" android:background="#0099cc"
             android:layout_marginRight="10dp"
             android:layout_margin="10dp" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="34dp"
-            android:background="@drawable/top2"
-            android:layout_weight="0.90" />
     </LinearLayout>
 
     <TableLayout
@@ -165,44 +159,11 @@ android:layout_height="match_parent" android:background="#0099cc"
             android:layout_height="fill_parent" />
     </TableLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot Password?"
-        android:id="@+id/lblForgotpassword"
-        android:textColor="#ff787878"
-        android:onClick="forgetPasswordClick"
-        android:clickable="true"
-        android:textStyle="bold|italic"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
-        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
-        android:textSize="20dp"
-        android:layout_gravity="right"
-        android:nestedScrollingEnabled="false" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="28dp"
-        android:layout_weight="0.36">
-
-        <TextView
-            style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New to Informus?"
-            android:id="@+id/lblCreateAccount"
-            android:capitalize="none"
-            android:focusable="true"
-            android:clickable="true"
-            android:singleLine="true"
-            android:enabled="true"
-            android:linksClickable="true"
-            android:textColor="#ff142144"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+        android:layout_weight="0.36"
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -212,36 +173,56 @@ android:layout_height="match_parent" android:background="#0099cc"
             android:background="#ffffffff"
             android:textIsSelectable="true"
             android:textColor="#ff0009ff"
-            android:textStyle="normal|bold|italic"
-            style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
             android:autoText="false"
             android:autoLink="none"
             android:clickable="true"
             android:textColorLink="#ff3963ff"
             android:typeface="serif"
-            android:translationZ="@dimen/abc_text_size_display_3_material"
-            android:theme="@style/AppTheme"
             android:linksClickable="true"
             android:longClickable="false"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textColorHighlight="#ff27ff00"
             android:onClick="signupClick"
-            android:maxHeight="60dp"
             android:maxLines="2"
             android:focusable="false"
-            android:layout_alignBottom="@+id/lblCreateAccount"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_alignBottom="@+id/lblForgotpassword"
+            android:layout_toRightOf="@+id/textView5"
+            android:layout_toEndOf="@+id/textView5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:id="@+id/lblForgotpassword"
+            android:textColor="#ff787878"
+            android:onClick="forgetPasswordClick"
+            android:clickable="true"
+            style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+            android:textSize="20dp"
+            android:layout_gravity="right"
+            android:nestedScrollingEnabled="false"
+            android:textIsSelectable="true"
+            android:layout_marginLeft="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:id="@+id/textView5"
+            android:textColor="#ff000000"
+            android:textSize="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/lblForgotpassword"
+            android:layout_toEndOf="@+id/lblForgotpassword"
+            android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginBottom="15dp" />
     </RelativeLayout>
 </LinearLayout>
 
-<RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="20dp"
-    android:background="@drawable/bottom2"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:id="@+id/backg" />
 </FrameLayout>

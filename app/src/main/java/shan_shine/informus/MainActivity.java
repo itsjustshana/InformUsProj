@@ -30,11 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
 public class MainActivity extends Activity implements View.OnClickListener {
     Button login;
-   EditText password;
+    EditText password;
     EditText username;
-
     String name;
     String pass;
 
@@ -124,21 +125,29 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                     if(username.getText().toString().equalsIgnoreCase(name))
 
-                    {
-                           pass = Jasonobject.getString("password");
+                    {  pass = Jasonobject.getString("password");
 
-                        if (password.getText().toString().equals(pass))
-                        {
-                            Printout.message(context, "Progress");
+                            if (password.getText().toString().equals(pass))
+                            {
+                               // Printout.message(context, "Progress");
+                                localDatabase();
+
+                                Intent nextScreen = new Intent(getApplicationContext(), HomePagefragActivity.class);
+                                nextScreen.putExtra("loggedInAs", name);
+                                startActivity(nextScreen);
 
 
-                            //////// Insert internal databse code here
-                            localDatabase();
-                        }
-                        else
-                        {
-                            Printout.message(context, "Didnt Work");
-                        }
+                                finish();
+                                }
+
+
+                            else
+                            {
+                                Printout.message(context, "Didnt Work");
+                            }
+
+
+
                     }
 
 
@@ -157,7 +166,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         // TODO Auto-generated method stub
         switch(v.getId()) {
             case R.id.btnLogIn :
-                Printout.message(this, "here we go");
+                //Printout.message(this, "here we go");
                 new task().execute();
                 break;
         }
@@ -183,35 +192,59 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
 
-     public void elseClick(View v)
-     {
-         Printout.message(this, "else");
-     }
+    public void elseClick(View v)
+    {
+        Printout.message(this, "else");
+    }
 
     public void localDatabase()
     {
         try {
+
             LoginDatabase db = new LoginDatabase(this);
 
-            Printout.message(this, "Local DB Created");
-
-            db.addLoginItem(new LoginItem(name,pass));
-
-            List<LoginItem> itemsLogin = db.getAllLoginItems();
-
-            for (LoginItem ti : itemsLogin) {
-                String log = "Id: " + ti.getUsername() + " , Body: " + ti.getPassword();
-
-                Printout.message(context, log);
-                // Writing Todo Items to log
-                Log.d("Name: ", log);
+            if ( db.getLoginItem(name) ==null)
+            {
+                Printout.message(this, "not there");
+                db.addLoginItem(new LoginItem(name,pass));
             }
-
-
+            else {
+                //Printout.message(this, "there");
+            }
         }
         catch(Exception e)
         {
-            Printout.message(this, "crashed");
+            Printout.message(this, "nah");
         }
     }
+
+    protected void loadGroup()
+    {
+        InputStream is = null ;
+        Printout.message(this, "attempting to load again");
+
+        String url_select = "http://shanalecia.com/Login.php";
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(url_select);
+
+        ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
+
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(param));
+
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpEntity = httpResponse.getEntity();
+
+            //read content
+            is =  httpEntity.getContent();
+
+        } catch (Exception e) {
+
+            Log.e("log_tag", "Error in http connection " + e.toString());
+            Printout.message(this, "error in loading ");
+            //Toast.makeText(MainActivity.this, "Please Try Again", Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

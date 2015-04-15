@@ -1,24 +1,25 @@
-package shan_shine.informus;
+package shan_shine.informus.Databases;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import shan_shine.informus.R;
 
-public class homepageActivity extends ActionBarActivity {
+public class GroupCreate extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
+        setContentView(R.layout.activity_group_create);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_homepage, menu);
+        getMenuInflater().inflate(R.menu.menu_group_create, menu);
         return true;
     }
 

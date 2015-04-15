@@ -31,6 +31,69 @@
             android:name=".homepageActivity"
             android:label="@string/title_activity_homepage" >
         </activity>
+        <activity
+            android:name=".homepageMainActivity"
+            android:label="@string/title_activity_homepage_main" >
+        </activity>
+        <activity
+            android:name=".myGroupsActivity"
+            android:label="@string/title_activity_my_groups" >
+        </activity>
+        <activity
+            android:name=".FollowingGroupsActivity"
+            android:label="@string/title_activity_following_groups" >
+        </activity>
+        <activity
+            android:name=".MainTab"
+            android:label="@string/title_activity_main_tab" >
+        </activity>
+        <activity
+            android:name=".HomepageMain"
+            android:label="@string/title_activity_homepage_main" >
+        </activity>
+
+        <service
+            android:name=".HomePagePauseWaitService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <activity
+            android:name=".MyGroupsActivity"
+            android:label="@string/title_activity_my_groups" >
+        </activity>
+        <activity
+            android:name=".GroupsFollowed"
+            android:label="@string/title_activity_groups_followed" >
+        </activity>
+        <activity
+            android:name=".Databases.WorkPlease"
+            android:label="@string/title_activity_work_please" >
+        </activity>
+        <activity
+            android:name=".FragmentTab"
+            android:label="@string/title_activity_fragment_tab" >
+        </activity>
+        <activity
+            android:name=".Home"
+            android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name=".Homee"
+            android:label="Informus" >
+        </activity>
+        <activity
+            android:name=".Databases.GroupCreate"
+            android:label="@string/title_activity_group_create" >
+        </activity>
+        <activity
+            android:name=".Databases.FragmentAct"
+            android:label="@string/title_activity_fragment" >
+        </activity>
+        <activity
+            android:name=".HomePagefragActivity"
+            android:label="@string/title_activity_yyyyyyyyyyyyy" >
+        </activity>
     </application>
 
 </manifest>
