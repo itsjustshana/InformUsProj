@@ -77,25 +77,6 @@ public class HomePagefragActivity extends FragmentActivity {
     public void launchMyGroups(View v) {
         new task2().execute();
 
-        Printout.message(context, "Done executing");
-        //Printout.message(context, "Result value: "+result);
-        //Printout.message(context, "Hell is:"+hellHell);
- /*
-        Bundle bundle = new Bundle();
-        bundle.putString("Logged as", loggedInAs);
-        bundle.putString("Groups", result);
-
-        MyGroupsFragment frag2 = new MyGroupsFragment();
-        frag2.setArguments(bundle);
-
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, frag2);
-        fragmentTransaction.addToBackStack(null);
-
-        fragmentTransaction.commit();
-
-
-        */
     }
 
     public void createNewGroup(View v) {

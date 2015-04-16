@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
@@ -42,6 +45,7 @@ public class MyGroupsFragment extends Fragment {
     InputStream is = null ;
     String result;
     String creator;
+    ListView listViewHandle;
 
     public MyGroupsFragment() {
         // Required empty public constructor
@@ -58,15 +62,15 @@ public class MyGroupsFragment extends Fragment {
 
         context = getActivity().getApplicationContext();
 
-        //Printout.message(context, "The result is!!!!!!!!!" + result);
 
         v = inflater.inflate(R.layout.fragment_my_groups, container, false);
+ listViewHandle = (ListView) v.findViewById(R.id.listView_groups);
 
-        // new task().execute();
 
         logged = (TextView) v.findViewById(R.id.text_loggedAsMyGroupsPage);
         logged.setText("Logged in as " + loggedInAs);
 
+        ArrayList<String> groupList = new ArrayList<String>();
 
         try {
             JSONArray Jarray = new JSONArray(result);
@@ -74,9 +78,14 @@ public class MyGroupsFragment extends Fragment {
                 JSONObject Jasonobject = null;
                 Jasonobject = Jarray.getJSONObject(i);
 
-                creator = Jasonobject.getString("creator");
+                creator = Jasonobject.getString("name");
+                groupList.add(creator);
+
                 Printout.message(context, "Creator"+creator);
             }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, groupList);
+        listViewHandle.setAdapter(adapter);
 
 
         } catch (Exception e) {
@@ -84,12 +93,25 @@ public class MyGroupsFragment extends Fragment {
             Log.e("log_tag", "Error parsing data "+e.toString());
         }
 
+        listViewHandle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Printout.message(context, "working, Item clicked: "+position);
+            }
+        });
 
         return v;
     }
 
+    public void onListItemClick ( ListView l, View v, int position, long id )
+    {
+      Printout.message(context, "working");
+    }
 
-
+    public void onListItemClicker(ListView parent, View view, int position, long id)
+    {
+        Printout.message(context, "working");
+    }
 
 
 }

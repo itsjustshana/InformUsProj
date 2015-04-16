@@ -117,6 +117,11 @@ android:onClick="workClick">
             android:layout_toRightOf="@+id/button2"
             android:layout_toEndOf="@+id/button2"
             android:onClick="GroupsFollowedClicked" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView_group" />
     </RelativeLayout>
 
 </LinearLayout>

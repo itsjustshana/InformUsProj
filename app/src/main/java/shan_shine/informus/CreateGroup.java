@@ -102,7 +102,7 @@ public class CreateGroup extends Fragment {
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 formattedDate = df.format(c.getTime());
-                Printout.message(context, ""+formattedDate);
+                //Printout.message(context, ""+formattedDate);
 
             }
         });
@@ -146,7 +146,7 @@ try {
     HttpEntity entity = response.getEntity();
 
 
-    Printout.message(context, "Successful");
+    //Printout.message(context, "Successful");
 }
 catch(Exception e)
 {
@@ -195,7 +195,7 @@ catch(Exception e)
                     HttpEntity entity = response.getEntity();
 
 
-                    Printout.message(context, "Successful");
+                   // Printout.message(context, "Successful");
                 }
                 catch (Exception e)
                 {

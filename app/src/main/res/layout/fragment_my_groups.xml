@@ -56,7 +56,7 @@ android:padding="10dp">
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:background="#ffffffff"
         android:focusableInTouchMode="true"
         android:id="@+id/uu">
@@ -66,7 +66,8 @@ android:padding="10dp">
             android:layout_height="wrap_content"
             android:clickable="true"
             android:nestedScrollingEnabled="false"
-            android:onClick="createNewGroup">
+            android:onClick="createNewGroup"
+            android:id="@+id/relativeLayout">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,6 +81,15 @@ android:padding="10dp">
                 android:onClick="createNewGroup" />
         </RelativeLayout>
 
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView_groups"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_above="@+id/text_loggedAsMyGroupsPage"
+            android:background="#ff000000"
+            android:backgroundTint="#ffffa196" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,5 +98,6 @@ android:padding="10dp">
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
+
 </LinearLayout>
 </FrameLayout>
