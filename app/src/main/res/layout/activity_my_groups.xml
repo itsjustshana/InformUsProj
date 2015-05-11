@@ -121,7 +121,8 @@ android:onClick="workClick">
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/listView_group" />
+            android:id="@+id/listView_group"
+            android:clickable="true" />
     </RelativeLayout>
 
 </LinearLayout>

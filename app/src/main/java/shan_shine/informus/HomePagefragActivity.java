@@ -31,6 +31,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 
@@ -49,7 +52,7 @@ public class HomePagefragActivity extends FragmentActivity {
         setContentView(R.layout.activity_fragment);
 
         loggedInAs = getIntent().getExtras().getString("loggedInAs");
-        //Printout.message(this, "congrats: " + loggedInAs);
+
 
 
         if (findViewById(R.id.container) != null) {
@@ -64,14 +67,19 @@ public class HomePagefragActivity extends FragmentActivity {
     }
 
 
-    public void testClick(View v) {
-        fragment2 frag2 = new fragment2();
+    public void FollowingClick(View v) {
+        new task3().execute();
+
+    }
+
+    public void FollowNewGroup(View v)
+    {
+        FollowerGroupSearch frag2 = new FollowerGroupSearch();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, frag2);
         fragmentTransaction.addToBackStack(null);
 
         fragmentTransaction.commit();
-
     }
 
     public void launchMyGroups(View v) {
@@ -105,6 +113,8 @@ public class HomePagefragActivity extends FragmentActivity {
                 .add(R.id.container, frag1).commit();
     }
 
+
+    //my groups
     class task2 extends AsyncTask<String, String, Void> {
         private ProgressDialog progressDialog = new ProgressDialog(context);
         InputStream is = null;
@@ -123,7 +133,101 @@ public class HomePagefragActivity extends FragmentActivity {
 
         @Override
         protected Void doInBackground(String... params) {
+
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            nameValuePairs.add(new BasicNameValuePair("username", loggedInAs));
+
+
             String url_select = "http://shanalecia.com/LoadMyGroups.php";
+
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url_select);
+
+            ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
+
+            try {
+                //httpPost.setEntity(new UrlEncodedFormEntity(param));
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+
+                HttpEntity httpEntity = httpResponse.getEntity();
+
+                //read content
+                is = httpEntity.getContent();
+
+            } catch (Exception e) {
+
+                //Printout.message(context, "Failed at 1");
+                Log.e("log_tag", "Error in http connection " + e.toString());
+
+            }
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb = new StringBuilder();
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                is.close();
+                result = sb.toString();
+                //Printout.message(context, "Here in function"+result);
+               // hellHell = result;
+
+            } catch (Exception e) {
+                // TODO: handle exception
+               // Printout.message(context, "Failed at 2");
+                Log.e("log_tag", "Error converting result " + e.toString());
+            }
+
+            return null;
+
+        }
+
+        protected void onPostExecute(Void v) {
+            //Printout.message(context, "Success :)");
+            this.progressDialog.dismiss();
+            //Printout.message(context, "The result is" + result);
+            hellHell = result;
+
+
+            Bundle bundle = new Bundle();
+            bundle.putString("Logged as", loggedInAs);
+            bundle.putString("Groups", result);
+
+            MyGroupsFragment frag2 = new MyGroupsFragment();
+            frag2.setArguments(bundle);
+
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, frag2);
+            fragmentTransaction.addToBackStack(null);
+
+            fragmentTransaction.commit();
+        }
+    }
+
+
+    //following groups
+    class task3 extends AsyncTask<String, String, Void> {
+        private ProgressDialog progressDialog = new ProgressDialog(context);
+        InputStream is = null;
+
+
+        protected void onPreExecute() {
+            progressDialog.setMessage("Fetching Groups...");
+            progressDialog.show();
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface arg0) {
+                    task3.this.cancel(true);
+                }
+            });
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String url_select = "http://shanalecia.com/LoadMyFollowedGroups.php";
 
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url_select);
@@ -155,7 +259,7 @@ public class HomePagefragActivity extends FragmentActivity {
                 is.close();
                 result = sb.toString();
                 //Printout.message(context, "Here in function"+result);
-               // hellHell = result;
+                // hellHell = result;
 
             } catch (Exception e) {
                 // TODO: handle exception
@@ -168,9 +272,9 @@ public class HomePagefragActivity extends FragmentActivity {
         }
 
         protected void onPostExecute(Void v) {
-            Printout.message(context, "Success :)");
+            //Printout.message(context, "Success :)");
             this.progressDialog.dismiss();
-            Printout.message(context, "The result is" + result);
+           // Printout.message(context, "The result is" + result);
             hellHell = result;
 
 
@@ -178,7 +282,8 @@ public class HomePagefragActivity extends FragmentActivity {
             bundle.putString("Logged as", loggedInAs);
             bundle.putString("Groups", result);
 
-            MyGroupsFragment frag2 = new MyGroupsFragment();
+
+            FollowingFragment frag2 = new FollowingFragment();
             frag2.setArguments(bundle);
 
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

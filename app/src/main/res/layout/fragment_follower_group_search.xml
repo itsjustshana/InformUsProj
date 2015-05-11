@@ -1,9 +1,92 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="shan_shine.informus.FollowerGroupSearch">
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+android:layout_height="match_parent" tools:context="shan_shine.informus.FollowerGroupSearch"
+android:background="@drawable/wood"
+android:padding="10dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+<!-- TODO: Update blank fragment layout -->
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffffff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="61dp"
+            android:background="#82a7522a">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:src="@drawable/searchsmall"
+                android:scaleType="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search for Group"
+                android:id="@+id/textView9"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp" />
+
+            <EditText
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText3"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:maxLines="1"
+                android:background="#ffeeeeee" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Results:"
+                android:id="@+id/textView10"
+                android:layout_marginLeft="5dp" />
+        </LinearLayout>
+
+        <ListView
+            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/listView"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_above="@+id/text_loggedAsMyGroupsPage"
+            android:background="#82a7522a"
+            android:backgroundTint="#82a7522a"
+            android:choiceMode="singleChoice"
+            android:theme="@style/Base.TextAppearance.AppCompat.SearchResult"
+            android:headerDividersEnabled="true"
+            android:touchscreenBlocksFocus="false"
+            android:cacheColorHint="#ffff39c9"
+            android:smoothScrollbar="true"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
+
+</RelativeLayout>
 
 </FrameLayout>

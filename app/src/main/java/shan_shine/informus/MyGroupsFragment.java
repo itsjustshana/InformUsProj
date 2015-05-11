@@ -81,7 +81,7 @@ public class MyGroupsFragment extends Fragment {
                 creator = Jasonobject.getString("name");
                 groupList.add(creator);
 
-                Printout.message(context, "Creator"+creator);
+               //Printout.message(context, "Creator"+creator);
             }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, groupList);

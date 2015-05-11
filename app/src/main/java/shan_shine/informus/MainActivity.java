@@ -175,7 +175,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public void signupClick(View v)
     {
-        Printout.message(this, "SignUp CLicked");
+        //Printout.message(this, "SignUp CLicked");
 
         Intent nextScreen = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(nextScreen);
@@ -184,7 +184,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public void forgetPasswordClick(View v)
     {
-        Printout.message(this, "Forget Password Clicked");
+        //Printout.message(this, "Forget Password Clicked");
 
         Intent nextScreen = new Intent(getApplicationContext(), ForgotPassword.class);
         startActivity(nextScreen);
@@ -205,7 +205,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             if ( db.getLoginItem(name) ==null)
             {
-                Printout.message(this, "not there");
+                //Printout.message(this, "not there");
                 db.addLoginItem(new LoginItem(name,pass));
             }
             else {
@@ -214,7 +214,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
         catch(Exception e)
         {
-            Printout.message(this, "nah");
+            //Printout.message(this, "nah");
         }
     }
 

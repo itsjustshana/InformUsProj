@@ -39,7 +39,8 @@
                 android:layout_toEndOf="@+id/button_homepage"
                 android:clickable="true"
                 android:enabled="true"
-                android:onClick="testClick" />
+                android:onClick="FollowingClick"
+                android:nestedScrollingEnabled="false" />
 
             <Button
                 android:layout_width="wrap_content"
