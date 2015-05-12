@@ -37,7 +37,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 
-public class HomePagefragActivity extends FragmentActivity {
+public class HomePagefragActivity extends FragmentActivity implements Communicato {
 
     Context context = this;
     String loggedInAs;
@@ -111,6 +111,26 @@ public class HomePagefragActivity extends FragmentActivity {
         frag1.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, frag1).commit();
+    }
+
+    @Override
+    public void respondSendToGroup(String data) {
+        Printout.message(this, "About to send a message to members of the group " + data+ ", from "+loggedInAs);
+
+        SendMessageToGroup fragment = new SendMessageToGroup();
+        Bundle bundle = new Bundle();
+        bundle.putString("Logged as", loggedInAs);
+        bundle.putString("Group name", data);
+
+        fragment.setArguments(bundle);
+
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+
     }
 
 

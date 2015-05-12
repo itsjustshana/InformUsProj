@@ -46,6 +46,7 @@ public class MyGroupsFragment extends Fragment {
     String result;
     String creator;
     ListView listViewHandle;
+    Communicato comm;
 
     public MyGroupsFragment() {
         // Required empty public constructor
@@ -70,7 +71,7 @@ public class MyGroupsFragment extends Fragment {
         logged = (TextView) v.findViewById(R.id.text_loggedAsMyGroupsPage);
         logged.setText("Logged in as " + loggedInAs);
 
-        ArrayList<String> groupList = new ArrayList<String>();
+        final ArrayList<String> groupList = new ArrayList<String>();
 
         try {
             JSONArray Jarray = new JSONArray(result);
@@ -96,13 +97,22 @@ public class MyGroupsFragment extends Fragment {
         listViewHandle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Printout.message(context, "working, Item clicked: "+position);
+                Printout.message(context, "working, Item clicked: "+position +" "+id +groupList.get(position).toString());
+                comm.respondSendToGroup(groupList.get(position).toString());
+
             }
         });
 
         return v;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        comm= (Communicato) getActivity();
+
+    }
     public void onListItemClick ( ListView l, View v, int position, long id )
     {
       Printout.message(context, "working");
