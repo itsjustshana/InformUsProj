@@ -116,7 +116,7 @@ public class CreateGroup extends Fragment {
     private void ThisFunction()  {
 
         groupName = ed_name.getText().toString();
-        groupDescr = ed_name.getText().toString();
+        groupDescr = ed_descr.getText().toString();
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -149,77 +149,17 @@ try {
     HomePageFrag frag1 = new HomePageFrag();
 
 
-}
-catch(Exception e)
-{
-    Printout.message(context, "NOPE");
-}
+        }
+        catch(Exception e)
+        {
+            Printout.message(context, "NOPE");
+        }
 
     }
 
 
 
-        class task extends AsyncTask<String, String, Void>
-        {
-            private ProgressDialog progressDialog = new ProgressDialog(context);
 
-            protected void onPreExecute() {
-                progressDialog.setMessage("Creating Group...");
-                progressDialog.show();
-                progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface arg0) {
-                        task.this.cancel(true);
-                    }
-                });
-            }
-            @Override
-            protected Void doInBackground(String... params) {
-                try {
-
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                nameValuePairs.add(new BasicNameValuePair("creator", creatorString));
-                nameValuePairs.add(new BasicNameValuePair("groupName", groupName));
-                nameValuePairs.add(new BasicNameValuePair("groupDescr", groupDescr));
-                nameValuePairs.add(new BasicNameValuePair("dateCreated", formattedDate));
-
-
-
-
-                    HttpClient httpClient = new DefaultHttpClient();
-
-                    HttpPost httpPost = new HttpPost("http://shanalecia.com/addNewGroup.php");
-
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                    HttpResponse response = httpClient.execute(httpPost);
-
-                    HttpEntity entity = response.getEntity();
-
-
-                   // Printout.message(context, "Successful");
-                }
-                catch (Exception e)
-                {
-                    Printout.message(context, "Womp, error");
-                    e.printStackTrace();
-                }
-                return null;
-
-            }
-            protected void onPostExecute(Void v) {
-
-                // ambil data dari Json database
-                try {
-
-                    this.progressDialog.dismiss();
-
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    Log.e("log_tag", "Error parsing data "+e.toString());
-                }
-            }
-        }
 
 
 

@@ -75,7 +75,8 @@ android:padding="10dp">
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:onClick="createNewGroup" />
+                android:onClick="createNewGroup"
+                android:clickable="true" />
 
             <TextView
                 android:layout_width="wrap_content"

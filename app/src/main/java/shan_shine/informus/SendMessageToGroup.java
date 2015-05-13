@@ -1,9 +1,13 @@
 package shan_shine.informus;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +24,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,9 +37,9 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SendMessageToGroup extends Fragment{
+public class SendMessageToGroup extends Fragment {
 
-View v;
+    View v;
     EditText message;
     TextView groupName;
     String groupNameString;
@@ -39,6 +47,8 @@ View v;
     String messageToSend;
     Context context;
     Button clicked;
+    String formattedDate;
+    Communicato comm;
 
     public SendMessageToGroup() {
         // Required empty public constructor
@@ -55,17 +65,16 @@ View v;
         groupNameString = getArguments().getString("Group name");
 
 
-
         v = inflater.inflate(R.layout.fragment_send_message_to_group, container, false);
         groupName = (TextView) v.findViewById(R.id.label_GroupName);
-        groupName.setText(""+groupNameString);
+        groupName.setText("" + groupNameString);
         message = (EditText) v.findViewById(R.id.lbl_messageToSend);
 
-        clicked = (Button)v.findViewById(R.id.button_sendMessage);
+        clicked = (Button) v.findViewById(R.id.button_sendMessage);
         clicked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessageButtonCLicked(v);
+                sendMessageButtonCLicked();
             }
         });
 
@@ -73,49 +82,32 @@ View v;
         return v;
     }
 
-    public void sendMessageButtonCLicked (View v)
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
     {
+        super.onActivityCreated(savedInstanceState);
+        comm= (Communicato) getActivity();
+
+    }
+
+    public void sendMessageButtonCLicked() {
+
         messageToSend = message.getText().toString();
-        Printout.message(context, "messageToSend "+ messageToSend);
+        Printout.message(context, "messageToSend " + messageToSend);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formattedDate = df.format(c.getTime());
+
+        Printout.message(context, "Button Clicked");
+        String [] strings = new String[4];
+
+        strings[0] = formattedDate;
+        strings[1] = groupNameString;
+        strings[2] = messageToSend;
+
+        comm.responsetoCreateMessage(strings);
 
 
     }
-
-
-
-/*
-    private void ThisFunction()  {
-
-
-        // new task().execute();
-        try {
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-            nameValuePairs.add(new BasicNameValuePair("creator", creatorString));
-            nameValuePairs.add(new BasicNameValuePair("message", ))
-            
-
-            HttpClient httpClient = new DefaultHttpClient();
-
-            HttpPost httpPost = new HttpPost("http://shanalecia.com/addNewGroup.php");
-
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            HttpResponse response = httpClient.execute(httpPost);
-
-            HttpEntity entity = response.getEntity();
-
-
-            Printout.message(context, "Group Created");
-
-            HomePageFrag frag1 = new HomePageFrag();
-
-
-        }
-        catch(Exception e)
-        {
-            Printout.message(context, "NOPE");
-        }
-
-    }
-*/
 }

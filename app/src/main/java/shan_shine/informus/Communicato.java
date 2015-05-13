@@ -7,4 +7,8 @@ public interface Communicato {
 
 
     public void respondSendToGroup (String data);
+
+    public void responsetoCreateMessage( String[] data);
+
+    public void searchValAddGroup(String data);
 }

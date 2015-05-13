@@ -44,6 +44,9 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     InputStream is = null;
     String result = "";
     String hellHell ;
+    String sendToDate;
+    String sendToGroup;
+    String sendToMessage;
 
 
     @Override
@@ -134,6 +137,27 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     }
 
 
+    @Override
+    public void responsetoCreateMessage(String[] data)
+    {
+        Printout.message(context, "Got something "+data[0]+" "+data[1]+ ""+data[2]);
+        sendToGroup = data[1];
+        sendToMessage= data[2];
+        sendToDate= data[0];
+        Printout.message(context, "Before");
+
+        new task4().execute();
+
+        Printout.message(context, "aFTER");
+    }
+
+
+
+    @Override
+    public void searchValAddGroup(String data)
+    {
+
+    }
     //my groups
     class task2 extends AsyncTask<String, String, Void> {
         private ProgressDialog progressDialog = new ProgressDialog(context);
@@ -227,7 +251,6 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         }
     }
 
-
     //following groups
     class task3 extends AsyncTask<String, String, Void> {
         private ProgressDialog progressDialog = new ProgressDialog(context);
@@ -313,5 +336,70 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
             fragmentTransaction.commit();
         }
     }
+
+
+//Sending Message to a Group
+    class task4 extends AsyncTask<String, String, Void> {
+        private ProgressDialog progressDialog = new ProgressDialog(context);
+
+
+
+        protected void onPreExecute() {
+            progressDialog.setMessage("Sending Message Groups...");
+            progressDialog.show();
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface arg0) {
+                    task4.this.cancel(true);
+                }
+            });
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            try
+            {
+                    String url_select = "http://shanalecia.com/sendNewMessage.php";
+
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost(url_select);
+
+                    List<NameValuePair> param = new ArrayList<>(1);
+                    param.add(new BasicNameValuePair("dateCreated", sendToDate));
+                    param.add(new BasicNameValuePair("messageText", sendToMessage));
+                    param.add(new BasicNameValuePair("groupId", sendToGroup));
+
+
+
+                        httpPost.setEntity(new UrlEncodedFormEntity(param));
+                        HttpResponse httpResponse = httpClient.execute(httpPost);
+                        HttpEntity httpEntity = httpResponse.getEntity();
+
+                        //Printout.message(context, "Worked?");
+                return null;
+
+            }
+
+
+            catch (Exception e) {
+
+                Printout.message(context, "Failed at 1");
+
+            }
+            return null;
+        }
+
+
+
+        protected void onPostExecute(Void v) {
+
+            this.progressDialog.dismiss();
+
+        }
+    }
+
+
+
 }
 
