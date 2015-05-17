@@ -20,5 +20,11 @@ public interface Communicato {
 
     public void toViewMessageContent2 (Message data);
 
+    public void toLeaveGroup( String data);
+
+    public void DeleteGroup(String data);
+
+    public void joinnGroupVal(String data);
+
 
 }

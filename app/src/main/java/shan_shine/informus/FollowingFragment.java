@@ -27,11 +27,18 @@ View v;
     Context context;
     String groupId;
     ListView listViewHandle;
+    Communicato comm;
 
     public FollowingFragment() {
         // Required empty public constructor
     }
 
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        comm= (Communicato) getActivity();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,8 +80,7 @@ View v;
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Printout.message(context, "working, Item clicked: " + position + " " + id + groupList.get(position).toString());
-
-
+                    comm.toLeaveGroup(groupList.get(position).toString());
                 }
             });
         }

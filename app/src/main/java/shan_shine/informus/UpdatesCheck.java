@@ -168,7 +168,22 @@ public class UpdatesCheck extends Service {
                                         //  groupList.add(mess);
                                         inbox.addMessageItem(mess);
                                         setNotification(groupID, messText);
-                                        putDialog(groupID, messText);
+                                        //putDialog(groupID, messText);
+
+
+
+                                        final Dialog dialog = new Dialog(context);
+                                        dialog.setContentView(R.layout.alert_xml);
+                                        dialog.setTitle("New Message From: " + groupID + " " + ""+messText);
+                                        Button btn = (Button) dialog.findViewById(R.id.button_okDialog);
+                                        btn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        dialog.show();
                                     } else {
                                         Log.d("Indatabase", "YES!");
 

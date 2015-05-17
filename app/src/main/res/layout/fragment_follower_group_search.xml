@@ -84,6 +84,14 @@ android:padding="10dp">
                 android:text="Results:"
                 android:id="@+id/label_results"
                 android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/text_resultStat"
+                android:layout_marginLeft="20dp"
+                android:background="#ffa2431c" />
         </LinearLayout>
 
         <ListView

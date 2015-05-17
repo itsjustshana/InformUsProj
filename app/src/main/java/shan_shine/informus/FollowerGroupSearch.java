@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -49,6 +50,7 @@ public class FollowerGroupSearch extends Fragment {
     String result;
     String name;
     ListView listViewHandle;
+    TextView gh;
 
     Communicato comm;
 
@@ -70,18 +72,34 @@ public class FollowerGroupSearch extends Fragment {
         v= inflater.inflate(R.layout.fragment_follower_group_search, container, false);
         searchForGroup = (Button) v.findViewById(R.id.button_go);
         search = (EditText) v.findViewById(R.id.editText_search);
+        gh= (TextView)v.findViewById(R.id.text_resultStat);
+
+
         listViewHandle = (ListView) v.findViewById(R.id.listView_searchResults);
 
         searchForGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-            Call();
+
+                //Call();
+                String searchVal = search.getText().toString();
+
+                Log.d("Search Value :",searchVal);
+
+                if(searchVal.matches(""))
+                {
+                    Log.d("Search Value :","null");
+                    comm.searchValAddGroup();
+                }
+                else
+                {
+                    Log.d("Stringgggg", searchVal);
+                    comm.joinnGroupVal(searchVal);
+                }
 
             }
         });
-
-
 
 
         final ArrayList<String> groupList = new ArrayList<String>();
@@ -107,6 +125,14 @@ public class FollowerGroupSearch extends Fragment {
             } catch (Exception e) {
                 // TODO: handle exception
                 Log.e("log_tag", "Error parsing data " + e.toString());
+            }
+
+            if (groupList.isEmpty())
+            {
+                Log.d("Group Empty:", "Yes");
+                gh.setText("No Results");
+
+
             }
 
             listViewHandle.setOnItemClickListener(new AdapterView.OnItemClickListener() {

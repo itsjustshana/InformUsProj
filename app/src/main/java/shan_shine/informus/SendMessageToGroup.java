@@ -1,6 +1,7 @@
 package shan_shine.informus;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -78,6 +79,14 @@ public class SendMessageToGroup extends Fragment {
             }
         });
 
+        Button delGroup = (Button)v.findViewById(R.id.button_delete_mygroup);
+        delGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteMyGroupClicked();
+            }
+        });
+
 
         return v;
     }
@@ -107,6 +116,14 @@ public class SendMessageToGroup extends Fragment {
         strings[2] = messageToSend;
 
         comm.responsetoCreateMessage(strings);
+
+
+    }
+
+    public void deleteMyGroupClicked()
+    {
+        Log.d("Clickeddd", "Clicked");
+        comm.DeleteGroup(groupNameString);
 
 
     }

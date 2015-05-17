@@ -64,6 +64,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     String groupWantedToAdd;
     String name;
     String formattedDate;
+    String group;
     CheckForUpdatesService check;
 
     @Override
@@ -98,21 +99,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     public void FollowNewGroup(View v)
     {
 
-        Bundle bundle = new Bundle();
-        bundle.putString("Logged as", loggedInAs);
-        bundle.putString("Groups", null);
-
-        FollowerGroupSearch frag2 = new FollowerGroupSearch();
-        frag2.setArguments(bundle);
-
-
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, frag2);
-        fragmentTransaction.addToBackStack(null);
-
-        fragmentTransaction.commit();
-
-        //new task5().execute();
+        new task5().execute();
     }
 
     public void launchMyGroups(View v) {
@@ -149,6 +136,13 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
 
     }
 
+
+    @Override
+    public void DeleteGroup(String data)
+    {
+        DeleteDialog(data);
+    }
+
     @Override
     public void respondSendToGroup(String data) {
         Printout.message(this, "About to send a message to members of the group " + data+ ", from "+loggedInAs);
@@ -174,7 +168,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     @Override
     public void responsetoCreateMessage(String[] data)
     {
-        Printout.message(context, "Got something "+data[0]+" "+data[1]+ ""+data[2]);
+        Printout.message(context, "Got something " + data[0] + " " + data[1] + "" + data[2]);
         sendToGroup = data[1];
         sendToMessage= data[2];
         sendToDate= data[0];
@@ -221,6 +215,29 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     }
 
 
+    @Override
+    public void toLeaveGroup(String data)
+    {
+        group = data;
+
+
+        Bundle bundle = new Bundle();
+        bundle.putString("Logged as", loggedInAs);
+        bundle.putString("Result", result);
+
+        UnsubscribeGroup frag2 = new UnsubscribeGroup();
+        frag2.setArguments(bundle);
+
+
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, frag2);
+        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
+
+
+    }
+
     public void setNotification()
 
     {
@@ -237,7 +254,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         builder.setContentIntent(pendingIntent);
 
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(0,builder.build());
+        nm.notify(0, builder.build());
 
 
 
@@ -289,6 +306,24 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
              .add(R.id.container, frag1).commit();
 
  }
+
+    @Override
+    public void toViewMessageContent2 (Message data)
+    {
+
+        MessageContent frag1 = new MessageContent();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("Logged as", loggedInAs);
+        bundle.putString("MessageText", data.getMessageText());
+        bundle.putString("Date", data.getDateCreated());
+        bundle.putString("GroupId", data.getGroupId());
+
+        frag1.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, frag1).commit();
+
+    }
 
     //my groups
     class task2 extends AsyncTask<String, String, Void> {
@@ -619,6 +654,99 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         }
     }
 
+
+    class task5a extends AsyncTask<String, String, Void> {
+        private ProgressDialog progressDialog = new ProgressDialog(context);
+        InputStream is = null;
+
+
+        protected void onPreExecute() {
+            progressDialog.setMessage("Searching for groups...");
+            progressDialog.show();
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface arg0) {
+                    task5a.this.cancel(true);
+                }
+            });
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String url_select = "http://shanalecia.com/SearchingGroupsParam.php";
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url_select);
+
+            ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
+            param.add(new BasicNameValuePair("searchVal", searchValue));
+            Log.d("Searching for Value", searchValue);
+
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(param));
+
+
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpEntity httpEntity = httpResponse.getEntity();
+
+                //read content
+                is = httpEntity.getContent();
+
+            } catch (Exception e) {
+
+                Printout.message(context, "Failed at 1");
+                Log.e("log_tag", "Error in http connection " + e.toString());
+                //Toast.makeText(MainActivity.this, "Please Try Again", Toast.LENGTH_LONG).show();
+            }
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb = new StringBuilder();
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                is.close();
+                result = sb.toString();
+                // Printout.message(context, "Here in function"+result);
+                // hellHell = result;
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                Printout.message(context, "Failed at 2");
+                Log.e("log_tag", "Error converting result " + e.toString());
+            }
+
+            return null;
+
+        }
+
+        protected void onPostExecute(Void v) {
+            //Printout.message(context, "Success :)");
+            this.progressDialog.dismiss();
+
+            Printout.message(context, "The result is" + result);
+
+
+            Bundle bundle = new Bundle();
+            bundle.putString("Logged as", loggedInAs);
+            bundle.putString("Groups", result);
+
+            FollowerGroupSearch frag2 = new FollowerGroupSearch();
+            frag2.setArguments(bundle);
+
+
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, frag2);
+            fragmentTransaction.addToBackStack(null);
+
+            fragmentTransaction.commit();
+
+
+        }
+    }
+
+
     class task6 extends AsyncTask<String, String, Void> {
         private ProgressDialog progressDialog = new ProgressDialog(context);
         InputStream is = null;
@@ -933,10 +1061,7 @@ catch(Exception e)
 
     // Method to start the service
 
-
-
-
-    // Method to start the service
+   // Method to start the service
     public void startsService() {
         startService(new Intent(getBaseContext(), UpdatesCheck.class));
     }
@@ -965,10 +1090,171 @@ catch(Exception e)
         dialog.show();
     }
 
+    public void DeleteDialog(String data)
+    {
+
+
+        group =  data;
+        new task10().execute();
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.delete_group_cofirm);
+        dialog.setTitle("Delete?");
+        Button btn = (Button) dialog.findViewById(R.id.buttonYesDelete);
+        TextView rt = (TextView)dialog.findViewById(R.id.text_groupName_confDel);
+        rt.setText(group+" ?");
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+
+        Button btn1 = (Button) dialog.findViewById(R.id.button_CancelDelete);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
 
 
+        dialog.show();
+    }
 
+
+
+    class task9 extends AsyncTask<String, String, Void> {
+        private ProgressDialog progressDialog = new ProgressDialog(context);
+        InputStream is = null;
+
+
+        protected void onPreExecute() {
+            progressDialog.setMessage("Deleting Group..");
+            progressDialog.show();
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface arg0) {
+                    task9.this.cancel(true);
+                }
+            });
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String url_select = "http://shanalecia.com/deleteFrom.php";
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url_select);
+
+            List<NameValuePair> param = new ArrayList<>(1);
+            param.add(new BasicNameValuePair("username", loggedInAs));
+            Log.d("Value of Name", loggedInAs);
+            param.add(new BasicNameValuePair("group", group));
+            Log.d("Value of Group", group);
+
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(param));
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpEntity httpEntity = httpResponse.getEntity();
+
+                //read content
+
+
+            } catch (Exception e) {
+
+                Printout.message(context, "Failed at 1");
+                Log.e("log_tag", "Error in http connection " + e.toString());
+                //Toast.makeText(MainActivity.this, "Please Try Again", Toast.LENGTH_LONG).show();
+            }
+
+            return null;
+
+        }
+
+        protected void onPostExecute(Void v) {
+
+            progressDialog.dismiss();
+            launchHomePage();
+        }
+    }
+
+    class task10 extends AsyncTask<String, String, Void> {
+        private ProgressDialog progressDialog = new ProgressDialog(context);
+        InputStream is = null;
+
+
+        protected void onPreExecute() {
+            progressDialog.setMessage("Deleting Group..");
+            progressDialog.show();
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface arg0) {
+                    task10.this.cancel(true);
+                }
+            });
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String url_select = "http://shanalecia.com/deleteMyGroup.php";
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url_select);
+
+            List<NameValuePair> param = new ArrayList<>(0);
+            param.add(new BasicNameValuePair("group", group));
+            Log.d("Value of Group Delete", group);
+
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(param));
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpEntity httpEntity = httpResponse.getEntity();
+
+                //read content
+
+
+            } catch (Exception e) {
+
+                Printout.message(context, "Failed at 1");
+                Log.e("log_tag", "Error in http connection " + e.toString());
+                //Toast.makeText(MainActivity.this, "Please Try Again", Toast.LENGTH_LONG).show();
+            }
+
+            return null;
+
+        }
+
+        protected void onPostExecute(Void v) {
+
+            progressDialog.dismiss();
+            launchHomePage();
+        }
+    }
+
+    public void deleteGroup(View v)
+    {
+        new task9().execute();
+    }
+
+
+
+    public void deleteMyGroup(View v)
+    {
+
+    }
+
+    @Override
+    public void joinnGroupVal(String data)
+    {
+        searchValue = data;
+        new task5a().execute();
+    }
 
 }
 

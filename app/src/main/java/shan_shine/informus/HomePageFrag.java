@@ -101,8 +101,7 @@ public class HomePageFrag extends Fragment {
                     dateCr = Jasonobject.getString("dateCreated");
                     groupID = Jasonobject.getString("groupId");
 
-                    Message mess = new Message(messID, messText, groupID, email, dateCr);
-
+                    Message mess = new Message(messID, messText, email, groupID, dateCr);
 
 
                 if (isInDatabase(messID) == false)
@@ -149,14 +148,10 @@ public class HomePageFrag extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    Printout.message(context, " This is the total for project: " + position);
+
                     Message clickedMessage = ReadResults.get(position);
 
-
-                    String val = clickedMessage.getMessageText();
-
-                    Printout.message(context, ""+val);
-                    Printout.message(context, "here");
+                    comm.toViewMessageContent2(clickedMessage);
 
                 }
             });
@@ -167,7 +162,6 @@ public class HomePageFrag extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    Printout.message(context, " This is the total for project: "+ position);
 
                     Message clickedMessage = UnreadResults.get(position);
                     comm.toViewMessageContent(clickedMessage);

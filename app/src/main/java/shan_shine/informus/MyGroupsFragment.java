@@ -113,6 +113,8 @@ public class MyGroupsFragment extends Fragment {
         comm= (Communicato) getActivity();
 
     }
+
+
     public void onListItemClick ( ListView l, View v, int position, long id )
     {
       Printout.message(context, "working");
