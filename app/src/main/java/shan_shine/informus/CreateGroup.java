@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -145,6 +147,13 @@ try {
 
 
     Printout.message(context, "Group Created");
+
+    //HomePageFrag frag1 = new HomePageFrag();
+    FragmentManager manager = getActivity().getSupportFragmentManager();
+    FragmentTransaction trans = manager.beginTransaction();
+    trans.remove(this);
+    trans.commit();
+    manager.popBackStack();
 
     HomePageFrag frag1 = new HomePageFrag();
 

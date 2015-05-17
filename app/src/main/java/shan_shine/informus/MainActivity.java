@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,17 +30,20 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import shan_shine.informus.Databases.LogInLogDatabase;
 
 
-
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
     Button login;
     EditText password;
     EditText username;
     String name;
     String pass;
-
+    TextView link;
     Context context = this;
+
+    LogInLogDatabase logger;
+    Boolean logEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,59 @@ public class MainActivity extends Activity implements View.OnClickListener {
         login= (Button) findViewById(R.id.btnLogIn);
         username = (EditText) findViewById(R.id.txtLogin);
         password = (EditText) findViewById(R.id.txtPassword);
+        link = (TextView)findViewById(R.id.link_signUp);
+
+
+
+        logger= new LogInLogDatabase(this);
+
+        List<LoginLog> leto = new ArrayList<LoginLog>();
+
+        leto= logger.getAllLoginItems();
+        if (leto.isEmpty())
+        {
+            Log.d("IsEmptyValue","True" );
+            logEmpty = true;
+        }
+        else
+        {
+            Log.d("IsEmptyValue","False" );
+
+
+            List<LoginLog> lis = new ArrayList<>();
+            lis = logger.getAllLoginItems();
+
+            String one;
+            String two;
+
+            one = lis.get(0).getUsername();
+            two = lis.get(0).getPassword();
+
+
+            Log.e("Checking values 1: ", one);
+            Log.e("Checking values 2: ", two);
+
+            if (lis.get(0).getPassword().equals("true"))
+            {
+                Intent nextScreen = new Intent(getApplicationContext(), HomePagefragActivity.class);
+                nextScreen.putExtra("loggedInAs", one);
+                startActivity(nextScreen);
+
+
+                finish();
+            }
+
+
+            //--> straight in
+        }
+
+
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             signupClick();
+            }
+        });
 
         login.setOnClickListener(this);
     }
@@ -132,6 +189,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                // Printout.message(context, "Progress");
                                 localDatabase();
 
+                                if( logEmpty = true)
+                                {
+                                    LoginLog ite = new LoginLog(name, "true");
+                                    logger.addLoginItem(ite);
+                                    Log.d("Added?", "Yes");
+                                }
+
                                 Intent nextScreen = new Intent(getApplicationContext(), HomePagefragActivity.class);
                                 nextScreen.putExtra("loggedInAs", name);
                                 startActivity(nextScreen);
@@ -161,6 +225,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
+
+
+
+
+
+
+
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
@@ -173,12 +244,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
-    public void signupClick(View v)
+    public void signupClick()
     {
         //Printout.message(this, "SignUp CLicked");
 
+
         Intent nextScreen = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(nextScreen);
+
+
+
 
     }
 
@@ -202,7 +277,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         try {
 
             LoginDatabase db = new LoginDatabase(this);
-
             if ( db.getLoginItem(name) ==null)
             {
                 //Printout.message(this, "not there");

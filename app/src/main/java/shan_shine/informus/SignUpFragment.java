@@ -1,23 +1,19 @@
 package shan_shine.informus;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.StrictMode;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -27,22 +23,17 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.graphics.Color.TRANSPARENT;
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class SignUpFragment extends Fragment {
 
-
-public class SignUpActivity  extends Activity
-{
-
+    View v;
     EditText firstName, lastName, email, confirmEmail, password, confirmPassword, phoneNum;
     RadioGroup g;
     RadioButton selectedButton;
@@ -60,62 +51,65 @@ public class SignUpActivity  extends Activity
     String passwordString ="";
     String confirmPasswordString="";
     String phoneNumString ="";
+    Button contin;
+
+    Context context;
+
+
+    public SignUpFragment() {
+        // Required empty public constructor
+    }
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        v=  inflater.inflate(R.layout.activity_sign_up, container, false);
 
+        context = getActivity().getApplicationContext();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
-        setContentView(R.layout.activity_sign_up);
 
+        firstName = (EditText)v.findViewById(R.id.txtFirstName);
+        lastName = (EditText)v.findViewById(R.id.txtLastName);
+        email = (EditText)v.findViewById(R.id.txtEmail);
+        confirmEmail = (EditText)v.findViewById(R.id.txtConfirmEmail);
+        password = (EditText)v.findViewById(R.id.txtPassword);
+        confirmPassword = (EditText)v.findViewById(R.id.txtConfPassword);
+        phoneNum = (EditText)v.findViewById(R.id.txtMobile);
+        contin = (Button)v.findViewById(R.id.button_Contin);
+
+        g=(RadioGroup)v.findViewById(R.id.radiogroup_gender);
+
+        contin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                buttonClick();
+
+            }
+        });
+
+
+        return v;
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void buttonClick(View v)
+    public void buttonClick()
     {
         //Printout.message(this, "Continue button clicked");
 
 
-        firstName = (EditText)findViewById(R.id.txtFirstName);
-        lastName = (EditText)findViewById(R.id.txtLastName);
-        email = (EditText)findViewById(R.id.txtEmail);
-        confirmEmail = (EditText)findViewById(R.id.txtConfirmEmail);
-        password = (EditText)findViewById(R.id.txtPassword);
-        confirmPassword = (EditText)findViewById(R.id.txtConfPassword);
-        phoneNum = (EditText)findViewById(R.id.txtMobile);
+
 
         //RadioButton Group
-        g=(RadioGroup)findViewById(R.id.radiogroup_gender);
+
         int selected = g.getCheckedRadioButtonId();
 
         /* selected button illustrating if it is a male of female */
-        selectedButton = (RadioButton) findViewById(selected);
+        selectedButton = (RadioButton) v.findViewById(selected);
 
         //Transfering Values
         fnameString = firstName.getText().toString();
@@ -128,7 +122,7 @@ public class SignUpActivity  extends Activity
         phoneNumString = phoneNum.getText().toString();
 
 
-        Printout.message(this, ""+passwordString);
+       // Printout.message(this, ""+passwordString);
         passwordsMatch = checkIfPasswordsMatch(passwordString, confirmPasswordString);
 
         emailsMatch = checkIfEmailsMatch(emailString, confirmEmailString);
@@ -162,15 +156,16 @@ public class SignUpActivity  extends Activity
                 HttpEntity entity = response.getEntity();
 
 
-                Printout.message(this, "Signup Successful");
+                Printout.message(context, "Signup Successful");
 
-                Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(nextScreen);
+                SignUpFragment frag2 = new SignUpFragment();
+
+
 
             }
             catch (Exception e)
             {
-                Printout.message(this, "Signup error");
+                Printout.message(context, "Signup error");
                 e.printStackTrace();
             }
         }
@@ -184,7 +179,7 @@ public class SignUpActivity  extends Activity
             return true;
         }
         else {
-            Printout.message(this, "Passwords dont match");
+            Printout.message(context, "Passwords dont match");
         }
         return false;
     }
@@ -197,7 +192,7 @@ public class SignUpActivity  extends Activity
         }
 
         else {
-            Printout.message(this, "Emails dont match");
+            Printout.message(context, "Emails dont match");
         }
         return false;
     }
@@ -217,7 +212,7 @@ public class SignUpActivity  extends Activity
 
     public void EndOnClick(View view)
     {
-        Printout.message(this, "clicked else");
+        Printout.message(context, "clicked else");
     }
 
 }

@@ -25,7 +25,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:minWidth="120dp"
-                    />
+                    android:onClick="launchHomePage" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                     android:layout_alignParentEnd="true"
                     android:clickable="true"
                     android:enabled="true"
-                    />
+                    android:onClick="launchMyGroups" />
             </RelativeLayout>
 
             <RelativeLayout

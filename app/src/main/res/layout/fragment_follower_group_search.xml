@@ -43,19 +43,20 @@ android:padding="10dp">
                 android:id="@+id/textView9"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/imageView"
-                android:layout_toEndOf="@+id/imageView"
-                android:layout_marginLeft="10dp" />
+                android:layout_toEndOf="@+id/imageView" />
 
             <EditText
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/editText3"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:id="@+id/editText_search"
                 android:maxLines="1"
                 android:background="#ffeeeeee"
                 android:layout_alignBottom="@+id/textView9"
                 android:layout_toRightOf="@+id/textView9"
-                android:layout_toEndOf="@+id/textView9"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@+id/button_go"
+                android:layout_toStartOf="@+id/button_go"
+                android:layout_marginTop="5dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -63,10 +64,12 @@ android:padding="10dp">
                 android:layout_height="wrap_content"
                 android:text="Go"
                 android:id="@+id/button_go"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/editText3"
-                android:layout_toEndOf="@+id/editText3"
-                android:layout_marginLeft="5dp" />
+                android:clickable="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/editText_search"
+                android:layout_alignBottom="@+id/editText_search"
+                android:textSize="10dp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -87,7 +90,7 @@ android:padding="10dp">
             style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/listView"
+            android:id="@+id/listView_searchResults"
             android:layout_below="@+id/relativeLayout"
             android:layout_above="@+id/text_loggedAsMyGroupsPage"
             android:background="#82a7522a"

@@ -10,5 +10,15 @@ public interface Communicato {
 
     public void responsetoCreateMessage( String[] data);
 
-    public void searchValAddGroup(String data);
+    public void searchValAddGroup();
+
+    public void joidGroupVal(String data);
+
+    public void toJoinGroup( String[] data);
+
+    public void toViewMessageContent (Message data);
+
+    public void toViewMessageContent2 (Message data);
+
+
 }
