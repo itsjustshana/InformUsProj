@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,6 +29,8 @@ View v;
     String groupId;
     ListView listViewHandle;
     Communicato comm;
+    String loggedInAs;
+    TextView logged;
 
     public FollowingFragment() {
         // Required empty public constructor
@@ -44,11 +47,13 @@ View v;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context= getActivity().getApplicationContext();
+        loggedInAs = getArguments().getString("Logged as");
         result = getArguments().getString("Groups");
         Printout.message(context, ""+ result);
         // Inflate the layout for this fragment
         v=  inflater.inflate(R.layout.fragment_following, container, false);
-
+        logged= (TextView)v.findViewById(R.id.text_loggedAsMyGroupsPage);
+        logged.setText("Logged in as " + loggedInAs);
         listViewHandle = (ListView) v.findViewById(R.id.listView_groupsFollowed);
 
         final ArrayList<String> groupList = new ArrayList<String>();

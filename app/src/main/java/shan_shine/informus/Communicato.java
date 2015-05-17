@@ -26,5 +26,19 @@ public interface Communicato {
 
     public void joinnGroupVal(String data);
 
+    public void deleteGroup(String delval);
+
+    public void viewMessages(String groupName);
+
+    public void toViewMessageContent3(Message clickedMessage);
+
+    public void toViewSent(String groupName);
+
+    public void goHome();
+
+    public void goToMyGroups();
+
+    public void goToFollowingGroups();
+
 
 }

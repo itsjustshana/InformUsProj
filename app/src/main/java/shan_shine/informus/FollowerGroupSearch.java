@@ -51,6 +51,7 @@ public class FollowerGroupSearch extends Fragment {
     String name;
     ListView listViewHandle;
     TextView gh;
+    TextView logged;
 
     Communicato comm;
 
@@ -65,6 +66,7 @@ public class FollowerGroupSearch extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         result = getArguments().getString("Groups");
+        String loggedInAs = getArguments().getString("Logged as");
 
         context= getActivity().getApplicationContext();
         //Printout.message(context,groups);
@@ -72,10 +74,12 @@ public class FollowerGroupSearch extends Fragment {
         v= inflater.inflate(R.layout.fragment_follower_group_search, container, false);
         searchForGroup = (Button) v.findViewById(R.id.button_go);
         search = (EditText) v.findViewById(R.id.editText_search);
+        logged= (TextView)v.findViewById(R.id.text_logg);
         gh= (TextView)v.findViewById(R.id.text_resultStat);
 
 
         listViewHandle = (ListView) v.findViewById(R.id.listView_searchResults);
+        logged.setText("Logged in as " + loggedInAs);
 
         searchForGroup.setOnClickListener(new View.OnClickListener() {
             @Override

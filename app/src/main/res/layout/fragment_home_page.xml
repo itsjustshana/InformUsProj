@@ -67,7 +67,8 @@
                 android:layout_below="@+id/UnreadMessages"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/ReadMessages">
+                android:id="@+id/ReadMessages"
+                android:layout_marginTop="20dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -93,7 +94,8 @@
                 <ListView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/listView_ReadMessages" />
+                    android:id="@+id/listView_ReadMessages"
+                    android:background="#82a7522a" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,13 +137,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="147dp"
                     android:id="@+id/listView_unreadMessages"
-                    android:background="#ffffa897" />
+                    android:background="#829e2f0c" />
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clickable="false">
+                android:clickable="false"
+                android:id="@+id/dddd">
 
                 <TextView
                     android:layout_width="wrap_content"

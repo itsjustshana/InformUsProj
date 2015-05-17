@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +47,8 @@ import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import shan_shine.informus.Databases.LogInLogDatabase;
 
@@ -56,7 +59,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     String loggedInAs;
     InputStream is = null;
     String result = "";
-    String hellHell ;
+    String hellHell;
     String sendToDate;
     String sendToGroup;
     String sendToMessage;
@@ -66,6 +69,10 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     String formattedDate;
     String group;
     CheckForUpdatesService check;
+    Boolean exitt;
+    Boolean canAdd;
+    String nothing = null;
+    View vieww;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +80,6 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         setContentView(R.layout.activity_fragment);
 
         loggedInAs = getIntent().getExtras().getString("loggedInAs");
-
 
 
         if (findViewById(R.id.container) != null) {
@@ -84,28 +90,60 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
 
 
         startsService();
-        putDialog();
+        putDialog("Welcome");
 
         launchHomePage();
 
 
     }
 
+    @Override
+    public void goHome(){
+        launchHomePage();
+    }
+
+@Override
+    public void goToMyGroups(){
+
+    putDialog("Group Created");
+    new task2().execute();
+
+}
+
+    @Override
+    public void goToFollowingGroups()
+    {
+
+        new task3().execute();
+    }
+
+
     public void FollowingClick(View v) {
         new task3().execute();
 
     }
 
-    public void FollowNewGroup(View v)
-    {
+    public void FollowNewGroup(View v) {
 
         new task5().execute();
     }
 
     public void launchMyGroups(View v) {
+
         new task2().execute();
 
     }
+
+
+
+
+    @Override
+    public void onBackPressed()
+    {
+launchHomePage();
+        // super.onBackPressed(); // Comment this super call to avoid calling finish()
+    }
+
 
     public void createNewGroup(View v) {
         CreateGroup fragment = new CreateGroup();
@@ -121,15 +159,14 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         fragmentTransaction.commit();
     }
 
-    public void launchHomePage(View v)
-    {
+    public void launchHomePage(View v) {
 
 
         new task8().execute();
 
     }
-    private void launchHomePage()
-    {
+
+    private void launchHomePage() {
 
 
         new task8().execute();
@@ -138,14 +175,24 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
 
 
     @Override
-    public void DeleteGroup(String data)
-    {
+    public void DeleteGroup(String data) {
         DeleteDialog(data);
     }
 
+
+@Override
+    public void viewMessages(String groupName)
+    {
+       group = groupName;
+        new task12().execute();
+    }
+
+
+
+
     @Override
     public void respondSendToGroup(String data) {
-        Printout.message(this, "About to send a message to members of the group " + data+ ", from "+loggedInAs);
+        Printout.message(this, "About to send a message to members of the group " + data + ", from " + loggedInAs);
 
         SendMessageToGroup fragment = new SendMessageToGroup();
         Bundle bundle = new Bundle();
@@ -166,33 +213,29 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
 
 
     @Override
-    public void responsetoCreateMessage(String[] data)
-    {
+    public void responsetoCreateMessage(String[] data) {
         Printout.message(context, "Got something " + data[0] + " " + data[1] + "" + data[2]);
         sendToGroup = data[1];
-        sendToMessage= data[2];
-        sendToDate= data[0];
+        sendToMessage = data[2];
+        sendToDate = data[0];
         //Printout.message(context, "Before");
 
         new task4().execute();
         startsService();
-       // Printout.message(context, "aFTER");
-    }
-
-
-
-    @Override
-    public void searchValAddGroup()
-    {
-
-     new task5().execute();
+        // Printout.message(context, "aFTER");
     }
 
 
     @Override
-    public void joidGroupVal(String data)
-    {
-        Printout.message(context ,"Received group to join "+data);
+    public void searchValAddGroup() {
+
+        new task5().execute();
+    }
+
+
+    @Override
+    public void joidGroupVal(String data) {
+        Printout.message(context, "Received group to join " + data);
         groupWantedToAdd = data;
         new task6().execute();
 
@@ -200,41 +243,35 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
 
 
     @Override
-    public void toJoinGroup( String[] data)
-    {
-        Printout.message(context, "Received to join a group "+ data);
+    public void toJoinGroup(String[] data) {
+        Printout.message(context, "Received to join a group " + data);
 
         formattedDate = data[0];
         loggedInAs = data[1];
-        name= data[2];
+        name = data[2];
 
 
-        Printout.message(context, ""+formattedDate+" "+loggedInAs+" "+name );
+        Printout.message(context, "" + formattedDate + " " + loggedInAs + " " + name);
+
+
         new task7().execute();
+
+        group = name;
+        //new task13().execute();
 
     }
 
 
     @Override
-    public void toLeaveGroup(String data)
-    {
+    public void toLeaveGroup(String data) {
+
+
+        searchValue = data;
+        new task11().execute();
+        /*
         group = data;
 
-
-        Bundle bundle = new Bundle();
-        bundle.putString("Logged as", loggedInAs);
-        bundle.putString("Result", result);
-
-        UnsubscribeGroup frag2 = new UnsubscribeGroup();
-        frag2.setArguments(bundle);
-
-
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, frag2);
-        fragmentTransaction.addToBackStack(null);
-
-        fragmentTransaction.commit();
-
+*/
 
     }
 
@@ -246,70 +283,80 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         builder.setContentTitle("New Message");
         builder.setContentText("This is new Text");
 
-        Intent i = new Intent(context,MainActivity.class);
+        Intent i = new Intent(context, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(i);
-        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
 
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(0, builder.build());
 
 
+    }
+
+
+    @Override
+
+    public void toViewMessageContent3(Message clickedMessage)
+    {
 
     }
 
 
- @Override
- public void toViewMessageContent (Message data)
- {
-     Printout.message(context, "Got data");
+    @Override
+    public void toViewSent(String groupName)
+    {
 
-     MessageContent frag1 = new MessageContent();
+    }
+    @Override
+    public void toViewMessageContent(Message data) {
+        Printout.message(context, "Got data");
 
-     Bundle bundle = new Bundle();
-     bundle.putString("Logged as", loggedInAs);
-     bundle.putString("MessageText", data.getMessageText());
-     bundle.putString("Date", data.getDateCreated());
-     bundle.putString("GroupId", data.getGroupId());
+        MessageContent frag1 = new MessageContent();
 
-
-     MessageDatabase md = new MessageDatabase(context);
-     //md.updateRow(data, "T");
-     md.deleteTodoItem(data);
-     data.setReadRead();
-
-     Printout.message(context, "Dont cry" + data.print());
-     String messId = data.getMessageId();
-     String messTxt = data.getMessageText();
-     String email = data.getEmail();
-     String dateCr = data.getDateCreated();
-     String groupId = data.getGroupId();
-     String rd = data.getRead();
-
-     md.addMessageItemStr(messId,messTxt,email,dateCr,groupId,rd);
-
-     List<Message> messageList = new ArrayList<Message>();
-
-     messageList = md.getAllMessageItems();
-     for (Message ti : messageList) {
-
-         String show = ""+ti.getMessageText()+" "+ti.getRead();
-         Printout.message(context, show);
-
-     }
+        Bundle bundle = new Bundle();
+        bundle.putString("Logged as", loggedInAs);
+        bundle.putString("MessageText", data.getMessageText());
+        bundle.putString("Date", data.getDateCreated());
+        bundle.putString("GroupId", data.getGroupId());
 
 
-     frag1.setArguments(bundle);
-     getSupportFragmentManager().beginTransaction()
-             .add(R.id.container, frag1).commit();
+        MessageDatabase md = new MessageDatabase(context);
+        //md.updateRow(data, "T");
+        md.deleteTodoItem(data);
+        data.setReadRead();
 
- }
+        Printout.message(context, "Dont cry" + data.print());
+        String messId = data.getMessageId();
+        String messTxt = data.getMessageText();
+        String email = data.getEmail();
+        String dateCr = data.getDateCreated();
+        String groupId = data.getGroupId();
+        String rd = data.getRead();
+
+        md.addMessageItemStr(messId, messTxt, email, dateCr, groupId, rd);
+
+        List<Message> messageList = new ArrayList<Message>();
+
+        messageList = md.getAllMessageItems();
+        for (Message ti : messageList) {
+
+            String show = "" + ti.getMessageText() + " " + ti.getRead();
+            Printout.message(context, show);
+
+        }
+
+
+        frag1.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, frag1).commit();
+
+    }
 
     @Override
-    public void toViewMessageContent2 (Message data)
-    {
+    public void toViewMessageContent2(Message data) {
 
         MessageContent frag1 = new MessageContent();
 
@@ -384,11 +431,11 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
                 is.close();
                 result = sb.toString();
                 //Printout.message(context, "Here in function"+result);
-               // hellHell = result;
+                // hellHell = result;
 
             } catch (Exception e) {
                 // TODO: handle exception
-               // Printout.message(context, "Failed at 2");
+                // Printout.message(context, "Failed at 2");
                 Log.e("log_tag", "Error converting result " + e.toString());
             }
 
@@ -485,7 +532,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         protected void onPostExecute(Void v) {
             //Printout.message(context, "Success :)");
             this.progressDialog.dismiss();
-           // Printout.message(context, "The result is" + result);
+            // Printout.message(context, "The result is" + result);
             hellHell = result;
 
 
@@ -506,10 +553,9 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     }
 
 
-//Sending Message to a Group
+    //Sending Message to a Group
     class task4 extends AsyncTask<String, String, Void> {
         private ProgressDialog progressDialog = new ProgressDialog(context);
-
 
 
         protected void onPreExecute() {
@@ -526,38 +572,32 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         @Override
         protected Void doInBackground(String... params) {
 
-            try
-            {
-                    String url_select = "http://shanalecia.com/sendNewMessage.php";
+            try {
+                String url_select = "http://shanalecia.com/sendNewMessage.php";
 
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost(url_select);
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost(url_select);
 
-                    List<NameValuePair> param = new ArrayList<>(1);
-                    param.add(new BasicNameValuePair("dateCreated", sendToDate));
-                    param.add(new BasicNameValuePair("messageText", sendToMessage));
-                    param.add(new BasicNameValuePair("groupId", sendToGroup));
-
+                List<NameValuePair> param = new ArrayList<>(1);
+                param.add(new BasicNameValuePair("dateCreated", sendToDate));
+                param.add(new BasicNameValuePair("messageText", sendToMessage));
+                param.add(new BasicNameValuePair("groupId", sendToGroup));
 
 
-                        httpPost.setEntity(new UrlEncodedFormEntity(param));
-                        HttpResponse httpResponse = httpClient.execute(httpPost);
-                        HttpEntity httpEntity = httpResponse.getEntity();
+                httpPost.setEntity(new UrlEncodedFormEntity(param));
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpEntity httpEntity = httpResponse.getEntity();
 
-                        //Printout.message(context, "Worked?");
+                //Printout.message(context, "Worked?");
                 return null;
 
-            }
-
-
-            catch (Exception e) {
+            } catch (Exception e) {
 
                 Printout.message(context, "Failed at 1");
 
             }
             return null;
         }
-
 
 
         protected void onPostExecute(Void v) {
@@ -616,7 +656,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
                 }
                 is.close();
                 result = sb.toString();
-               // Printout.message(context, "Here in function"+result);
+                // Printout.message(context, "Here in function"+result);
                 // hellHell = result;
 
             } catch (Exception e) {
@@ -636,19 +676,19 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
             Printout.message(context, "The result is" + result);
 
 
-             Bundle bundle = new Bundle();
-        bundle.putString("Logged as", loggedInAs);
-        bundle.putString("Groups", result);
+            Bundle bundle = new Bundle();
+            bundle.putString("Logged as", loggedInAs);
+            bundle.putString("Groups", result);
 
-        FollowerGroupSearch frag2 = new FollowerGroupSearch();
-        frag2.setArguments(bundle);
+            FollowerGroupSearch frag2 = new FollowerGroupSearch();
+            frag2.setArguments(bundle);
 
 
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, frag2);
-        fragmentTransaction.addToBackStack(null);
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, frag2);
+            fragmentTransaction.addToBackStack(null);
 
-        fragmentTransaction.commit();
+            fragmentTransaction.commit();
 
 
         }
@@ -684,7 +724,6 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
 
             try {
                 httpPost.setEntity(new UrlEncodedFormEntity(param));
-
 
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -840,7 +879,6 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         private ProgressDialog progressDialog = new ProgressDialog(context);
 
 
-
         protected void onPreExecute() {
             progressDialog.setMessage("Joining Group...");
             progressDialog.show();
@@ -855,8 +893,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         @Override
         protected Void doInBackground(String... params) {
 
-            try
-            {
+            try {
                 String url_select = "http://shanalecia.com/joinNewGroup.php";
 
                 HttpClient httpClient = new DefaultHttpClient();
@@ -865,8 +902,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
                 List<NameValuePair> param = new ArrayList<>(1);
                 param.add(new BasicNameValuePair("dateAdded", formattedDate));
                 param.add(new BasicNameValuePair("user", loggedInAs));
-                param.add(new BasicNameValuePair("groupId",name));
-
+                param.add(new BasicNameValuePair("groupId", name));
 
 
                 httpPost.setEntity(new UrlEncodedFormEntity(param));
@@ -876,10 +912,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
                 //Printout.message(context, "Worked?");
                 return null;
 
-            }
-
-
-            catch (Exception e) {
+            } catch (Exception e) {
 
                 Printout.message(context, "Failed at 1");
 
@@ -888,10 +921,11 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         }
 
 
-
         protected void onPostExecute(Void v) {
 
             this.progressDialog.dismiss();
+            putDialog("Group Followed");
+            goToFollowingGroups();
 
         }
     }
@@ -961,7 +995,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
         }
 
         protected void onPostExecute(Void v) {
-           // Printout.message(context, "Success :)");
+            // Printout.message(context, "Success :)");
             this.progressDialog.dismiss();
 
             //Printout.message(context, "The result is" + result);
@@ -974,7 +1008,7 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
             bundle.putString("Result", result);
 
 
-           // Printout.message(context, "The result is" + result);
+            // Printout.message(context, "The result is" + result);
 
             //frag1.setArguments(getIntent().getExtras());
             frag1.setArguments(bundle);
@@ -985,12 +1019,51 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
     }
 
 
-    public void signOutClicked(View v)
+    public void signOutClicked(View v) {
+
+        Log.e("SignoutClicked", "Yes");
+        vieww = v;
+        signOuttDialog();
+
+
+    }
+
+
+    public void signOuttDialog()
     {
 
-        stopsService(v);
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.sign_out_confirm);
+        dialog.setTitle("Signout?");
+        Button btn = (Button) dialog.findViewById(R.id.button_CancelOut);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
-     Log.d("Signout Clicked","yes");
+
+        Button btn2 = (Button) dialog.findViewById(R.id.button_yesOut);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+                signOutGo();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void signOutGo()
+    {
+
+        stopsService(vieww);
+
+        Log.d("Signout Clicked", "yes");
+
 
         LogInLogDatabase lb = new LogInLogDatabase(context);
 
@@ -999,61 +1072,230 @@ public class HomePagefragActivity extends FragmentActivity implements Communicat
 
         lb.close();
 
-        if (kl.isEmpty())
-        {
-            Log.d("Yes is empty, ","yes0");
+        if (kl.isEmpty()) {
+            Log.d("Yes is empty, ", "yes0");
 
 
-        }
-        else
-        {
+        } else {
             Log.d("Can sign out", "yes");
 
             LogInLogDatabase neww = new LogInLogDatabase(context);
 
             List<LoginLog> datae = new ArrayList<>();
-             datae= neww.getAllLoginItems();
-            if (datae.isEmpty())
-            {
+            datae = neww.getAllLoginItems();
+            if (datae.isEmpty()) {
                 Log.d("Wonder", "True");
-            }
-                    else {
+            } else {
                 Log.d("Wonder", "False");
                 neww.deleteLoginItem2(datae.get(0).getUsername());
 
 
-                if (neww.getAllLoginItems().isEmpty())
-                {
+                if (neww.getAllLoginItems().isEmpty()) {
                     Log.d("EMPTY YET?", "yes");
 
                     MessageDatabase md = new MessageDatabase(context);
 
-try {
-    md.deleteAll();
-}
-catch(Exception e)
-{
-    Log.d("FAILSSSS", ":(");
-}
+                    try {
+                        md.deleteAll();
+                    } catch (Exception e) {
+                        Log.d("FAILSSSS", ":(");
+                    }
 
 
                     Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
-                   // nextScreen.putExtra("loggedInAs", one);
+                    // nextScreen.putExtra("loggedInAs", one);
                     startActivity(nextScreen);
                     neww.close();
 
 
-
-
-
                     finish();
-                }
-                else
-                {
+                } else {
                     Log.d("EMPTY YET?", "no");
                 }
 
             }
+
+
+        }
+
+    }
+
+    class task11 extends AsyncTask<String, String, Void> {
+        private ProgressDialog progressDialog = new ProgressDialog(context);
+        InputStream is = null;
+
+
+        protected void onPreExecute() {
+            progressDialog.setMessage("Searching for groups...");
+            progressDialog.show();
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface arg0) {
+                    task11.this.cancel(true);
+                }
+            });
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String url_select = "http://shanalecia.com/SearchingGroupsParam.php";
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url_select);
+
+            ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
+            param.add(new BasicNameValuePair("searchVal", searchValue));
+            Log.d("Searching for Value", searchValue);
+
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(param));
+
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpEntity httpEntity = httpResponse.getEntity();
+
+                //read content
+                is = httpEntity.getContent();
+
+            } catch (Exception e) {
+
+                Printout.message(context, "Failed at 1");
+                Log.e("log_tag", "Error in http connection " + e.toString());
+                //Toast.makeText(MainActivity.this, "Please Try Again", Toast.LENGTH_LONG).show();
+            }
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb = new StringBuilder();
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                is.close();
+                result = sb.toString();
+                // Printout.message(context, "Here in function"+result);
+                // hellHell = result;
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                Printout.message(context, "Failed at 2");
+                Log.e("log_tag", "Error converting result " + e.toString());
+            }
+
+            return null;
+
+        }
+
+        protected void onPostExecute(Void v) {
+            //Printout.message(context, "Success :)");
+            this.progressDialog.dismiss();
+
+
+            Bundle bundle = new Bundle();
+            bundle.putString("Logged as", loggedInAs);
+            bundle.putString("Result", result);
+
+            UnsubscribeGroup frag2 = new UnsubscribeGroup();
+            frag2.setArguments(bundle);
+
+
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, frag2);
+            fragmentTransaction.addToBackStack(null);
+
+            fragmentTransaction.commit();
+
+
+
+        }
+    }
+
+
+
+
+    class task12 extends AsyncTask<String, String, Void> {
+        private ProgressDialog progressDialog = new ProgressDialog(context);
+        InputStream is = null;
+
+
+        protected void onPreExecute() {
+            progressDialog.setMessage("Getting Mesages...");
+            progressDialog.show();
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface arg0) {
+                    task12.this.cancel(true);
+                }
+            });
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String url_select = "http://shanalecia.com/viewMessagesbyGroupId.php";
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url_select);
+
+            ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
+            param.add(new BasicNameValuePair("searchVal", group));
+            Log.d("Searching for Value", group);
+
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(param));
+
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpEntity httpEntity = httpResponse.getEntity();
+
+                //read content
+                is = httpEntity.getContent();
+
+            } catch (Exception e) {
+
+                Printout.message(context, "Failed at 1");
+                Log.e("log_tag", "Error in http connection " + e.toString());
+                //Toast.makeText(MainActivity.this, "Please Try Again", Toast.LENGTH_LONG).show();
+            }
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb = new StringBuilder();
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                is.close();
+                result = sb.toString();
+                // Printout.message(context, "Here in function"+result);
+                // hellHell = result;
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                Printout.message(context, "Failed at 2");
+                Log.e("log_tag", "Error converting result " + e.toString());
+            }
+
+            return null;
+
+        }
+
+        protected void onPostExecute(Void v) {
+            //Printout.message(context, "Success :)");
+            this.progressDialog.dismiss();
+
+
+            Bundle bundle = new Bundle();
+            bundle.putString("Logged as", loggedInAs);
+            bundle.putString("Result", result);
+
+            ViewFollowedMessagesByGroup frag2 = new ViewFollowedMessagesByGroup();
+            frag2.setArguments(bundle);
+
+
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, frag2);
+            fragmentTransaction.addToBackStack(null);
+
+            fragmentTransaction.commit();
+
 
 
         }
@@ -1073,12 +1315,12 @@ catch(Exception e)
 
 
 
-    public void putDialog()
+    public void putDialog(String text)
     {
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.alert_xml);
-        dialog.setTitle("HWLLO");
+        dialog.setTitle(text);
         Button btn = (Button) dialog.findViewById(R.id.button_okDialog);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1090,12 +1332,15 @@ catch(Exception e)
         dialog.show();
     }
 
+
+
+
     public void DeleteDialog(String data)
     {
 
 
         group =  data;
-        new task10().execute();
+
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.delete_group_cofirm);
@@ -1109,6 +1354,7 @@ catch(Exception e)
             public void onClick(View v) {
                 dialog.dismiss();
 
+                new task10().execute();
             }
         });
 
@@ -1117,6 +1363,7 @@ catch(Exception e)
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+
             }
         });
 
@@ -1237,8 +1484,12 @@ catch(Exception e)
         }
     }
 
-    public void deleteGroup(View v)
+    @Override
+    public void deleteGroup(String delval)
     {
+        Log.d(":(",":'(");
+        searchValue = delval;
+        group = delval;
         new task9().execute();
     }
 
@@ -1256,7 +1507,13 @@ catch(Exception e)
         new task5a().execute();
     }
 
+
+
+
+
+
 }
+
 
 
 

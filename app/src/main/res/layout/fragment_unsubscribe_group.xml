@@ -14,7 +14,7 @@ android:padding="10dp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/JoinGroup">
 
         <LinearLayout
@@ -40,7 +40,7 @@ android:padding="10dp">
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/text_groupNameLeave"
+                android:id="@+id/text_groupNameUns"
                 android:layout_marginLeft="50dp" />
         </LinearLayout>
 
@@ -84,7 +84,7 @@ android:padding="10dp">
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/text_createdByJoinLeave"
+                android:id="@+id/text_createdByJoinUns"
                 android:layout_marginLeft="65dp" />
         </LinearLayout>
 
@@ -107,7 +107,7 @@ android:padding="10dp">
                 android:layout_height="168dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/text_descritionLeave"
+                android:id="@+id/text_descritionUns"
                 android:layout_marginLeft="6dp" />
         </LinearLayout>
 
@@ -119,16 +119,46 @@ android:padding="10dp">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Leave Group"
-                android:id="@+id/button_leaveGroup"
-                android:gravity="center_vertical|center|center_horizontal"
+                android:text="View All Messages"
+                android:id="@+id/button_viewAllMessages"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:clickable="true"
-                android:onClick="deleteGroup" />
+                android:layout_centerHorizontal="true" />
+
         </RelativeLayout>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leave Group"
+            android:id="@+id/button_leaveGroup"
+            android:gravity="center_vertical|center|center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:layout_gravity="center_horizontal" />
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/text_logss"
+        android:layout_gravity="right|top"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Home"
+        android:id="@+id/button9"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:onClick="launchHomePage"
+        android:layout_above="@+id/text_logss"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
 
 </FrameLayout>

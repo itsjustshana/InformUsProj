@@ -14,7 +14,7 @@ android:padding="10dp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="400dp"
         android:weightSum="1"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -76,7 +76,8 @@ android:padding="10dp">
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:id="@+id/kkk">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -110,8 +111,35 @@ android:padding="10dp">
             android:cacheColorHint="#ffff39c9"
             android:smoothScrollbar="true"
             android:layout_marginTop="5dp" />
+
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/text_logg"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="20dp" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back to Home"
+            android:id="@+id/button6"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="launchHomePage"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
 </FrameLayout>

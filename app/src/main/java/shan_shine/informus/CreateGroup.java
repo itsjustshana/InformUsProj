@@ -1,6 +1,7 @@
 package shan_shine.informus;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -59,6 +60,8 @@ public class CreateGroup extends Fragment {
     String groupDescr;
     String formattedDate;
     Date dateCreated;
+    TextView loggedAs;
+    Communicato comm;
 
     public CreateGroup() {
         // Required empty public constructor
@@ -77,6 +80,8 @@ public class CreateGroup extends Fragment {
         context = getActivity().getApplicationContext();
 
         v = inflater.inflate(R.layout.fragment_create_group, container, false);
+        TextView logged= (TextView)v.findViewById(R.id.text_lo);
+        logged.setText("Logged in as " + loggedInAs);
 
         creator = (EditText)v.findViewById(R.id.text_creatorName);
         creator.setText(loggedInAs);
@@ -111,6 +116,13 @@ public class CreateGroup extends Fragment {
         return v;
 
 
+
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        comm= (Communicato) getActivity();
 
     }
 
@@ -156,6 +168,8 @@ try {
     manager.popBackStack();
 
     HomePageFrag frag1 = new HomePageFrag();
+
+    comm.goToMyGroups();
 
 
         }

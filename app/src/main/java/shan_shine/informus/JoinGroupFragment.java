@@ -132,9 +132,10 @@ View v;
     private void Add()
     {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         formattedDate = df.format(c.getTime());
 
+        Log.d("DATEEEE", formattedDate);
 
         String[] send = new String [3];
 

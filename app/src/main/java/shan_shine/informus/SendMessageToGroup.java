@@ -50,6 +50,7 @@ public class SendMessageToGroup extends Fragment {
     Button clicked;
     String formattedDate;
     Communicato comm;
+    Button viewAllSent;
 
     public SendMessageToGroup() {
         // Required empty public constructor
@@ -84,6 +85,14 @@ public class SendMessageToGroup extends Fragment {
             @Override
             public void onClick(View v) {
                 deleteMyGroupClicked();
+            }
+        });
+
+        viewAllSent = (Button) v.findViewById(R.id.button_viewAllSentMess);
+        viewAllSent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewMessages();
             }
         });
 
@@ -127,4 +136,13 @@ public class SendMessageToGroup extends Fragment {
 
 
     }
+
+    public void viewMessages()
+    {
+        comm.viewMessages(groupNameString);
+    }
+
+
+
+
 }
